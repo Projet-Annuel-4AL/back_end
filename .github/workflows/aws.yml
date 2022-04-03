@@ -5,16 +5,6 @@ on:
     branches:
       - master        
 
-env:
-  AWS_REGION: eu-west-1               
-  ECR_REPOSITORY: projet-annuel          
-  ECS_SERVICE: projet-annuel-service                
-  ECS_CLUSTER: projet-annuel-cluster            
-  ECS_TASK_DEFINITION: task-definition.json  
-                                               
-  CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
-
 jobs:
   deploy:
     name: Deploy
@@ -28,8 +18,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-key: ${{ secrets.AWS_KEY }}
-        aws-secret: ${{ secrets.AWS_SECRET }}
+        aws-access-key-id: ${{ secrets.AWS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET }}
         aws-region: eu-west-1
 
     - name: Login to Amazon ECR
