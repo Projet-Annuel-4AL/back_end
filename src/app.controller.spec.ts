@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import anything = jasmine.anything;
 
 describe('AppController', () => {
   let appController: AppController;
@@ -15,8 +16,9 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return user profile', () => {
+      const req: { user: jasmine.Any } = { user: anything() };
+      expect(appController.getProfile(req)).toBe(req.user);
     });
   });
 });

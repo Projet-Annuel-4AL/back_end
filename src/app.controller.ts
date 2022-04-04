@@ -1,13 +1,35 @@
-import { Controller, Get, HttpCode } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
+import { LocalAuthGuard } from './auth/local-auth-guard';
+import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt-auth-guard';
+import { CompileService } from './compile/compile.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private authService: AuthService,
+    private compileService: CompileService,
+  ) {}
 
-  @Get()
-  @HttpCode(200)
-  getHello(): string {
-    return this.appService.getHello();
+  @UseGuards(LocalAuthGuard)
+  @Post('auth/login')
+  async login(@Request() req) {
+    return this.authService.login(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('compile')
+  compile(@Request() req) {
+    return this.compileService.compile(
+      req.body.code,
+      req.body.language,
+      req.body.input,
+    );
   }
 }
