@@ -45,7 +45,7 @@
     "networkMode": "awsvpc",
     "memory": "512",
     "cpu": "256",
-    "executionRoleArn": "arn:aws:iam::939844289542:role/ecsTaskExecutionRole",
+    "executionRoleArn": "ecsTaskExecutionRole",
     "family": "projet-annuel",
     "taskRoleArn": "arn:aws:iam::939844289542:role/ecsTaskExecutionRole",
     "runtimePlatform": {
