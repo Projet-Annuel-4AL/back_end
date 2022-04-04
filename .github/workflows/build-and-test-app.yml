@@ -1,4 +1,4 @@
-name: Build Next.js web application
+name: Build and Test Nestjs application
 
 on: [push]
 
@@ -17,6 +17,6 @@ jobs:
         run: npm ci
       - name: Build application 
         run: npm run build
-      - name: Build application 
+      - name: Test application 
         run: npm run test
       
