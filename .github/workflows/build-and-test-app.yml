@@ -3,7 +3,7 @@ name: Build and Test Nestjs application
 on: [push]
 
 jobs:
-  build-test-project:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -12,6 +12,10 @@ jobs:
       run: npm ci
     - name: Build application 
       run: npm run build 
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
     - name: Test application 
       run: npm run test
       
