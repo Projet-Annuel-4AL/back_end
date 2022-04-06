@@ -15,8 +15,8 @@ env:
 jobs:
   build:
     uses: ./.github/workflows/starter.yml
-    name: The job has succeeded
   deploy:
+      needs: build
       name: Deploy
       runs-on: ubuntu-latest
       environment: production
