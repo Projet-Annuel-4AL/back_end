@@ -13,9 +13,9 @@ env:
   CONTAINER_NAME: projet-annuel           
 
 jobs:
-  build:
+  build-production:
     uses: ./.github/workflows/starter.yml
-  deploy:
+  deployment-aws:
       needs: build
       name: Deploy
       runs-on: ubuntu-latest
