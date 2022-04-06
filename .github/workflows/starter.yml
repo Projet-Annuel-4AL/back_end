@@ -1,16 +1,17 @@
 name: Build And Test NestJs Application
 
 on:
+  workflow_call:
   push:
-    branches: [ master ]
+    branches:
+      - "**"
   pull_request:
-    branches: [ master ]
+    branches:
+      - "**"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
