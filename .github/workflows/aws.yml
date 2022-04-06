@@ -14,7 +14,7 @@ env:
 
 jobs:
   build:
-    uses: ./.github/workflows/workflow-2.yml
+    uses: ./.github/workflows/starter.yml
     name: The job has succeeded
     if: ${{ success() }}
   deploy:
