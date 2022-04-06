@@ -16,7 +16,6 @@ jobs:
   build:
     uses: ./.github/workflows/starter.yml
     name: The job has succeeded
-    if: ${{ success() }}
   deploy:
       name: Deploy
       runs-on: ubuntu-latest
@@ -62,5 +61,3 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
-        
-      if: ${{ failure() }}
