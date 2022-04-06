@@ -16,7 +16,7 @@ jobs:
   build-production:
     uses: ./.github/workflows/starter.yml
   deployment-aws:
-      needs: build
+      needs: build-production
       name: Deploy
       runs-on: ubuntu-latest
       environment: production
