@@ -1,8 +1,6 @@
 name: Deploy to Amazon ECS
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch: {}
 env:
   AWS_REGION: eu-west-1               
   ECR_REPOSITORY: projet-annuel          
@@ -13,10 +11,10 @@ env:
   CONTAINER_NAME: projet-annuel           
 
 jobs:
-  build-production:
+  build:
     uses: ./.github/workflows/starter.yml
   deployment-aws:
-      needs: build-production
+      needs: build
       name: Deploy
       runs-on: ubuntu-latest
       environment: production
