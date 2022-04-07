@@ -1,7 +1,7 @@
 name: AWS test
 on:
   push:
-    branches: [ main ]
+    branches: [ test ]
 
 jobs:
   continuous-integration:
