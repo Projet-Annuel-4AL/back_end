@@ -1,14 +1,14 @@
 version: 0.0
 os: linux
 files:
- - source: .
-   destination: /home/ec2-user/app
+– source: .
+destination: /home/ec2-user/projet-annuel
 hooks:
-  AfterInstall:
-   - location: scripts/install_app_dependencies
-     timeout: 300
-     runas: root
-  ApplicationStart:
-   - location: scripts/start_server
-     timeout: 300
-     runas: root
+ApplicationStop:
+  – location: scripts/application_stop.sh
+  timeout: 300
+  runas: ubuntu
+ApplicationStart:
+  – location: scripts/application_start.sh
+  timeout: 300
+  runas: ubuntu
