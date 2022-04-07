@@ -15,11 +15,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET }}
         aws-region: eu-west-1
         name: Create CodeDeploy Deployment
-
-      id: deploy
-      run: |
-        aws deploy create-deployment \
-        –application-name projet-annuel \
-        –deployment-group-name projet-annuel-group \
-        –deployment-config-name CodeDeployDefault.OneAtATime \
-        –github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+          –application-name projet-annuel \
+          –deployment-group-name projet-annuel-group \
+          –deployment-config-name CodeDeployDefault.OneAtATime \
+          –github-location repository=${{ github.repository }},commitId=${{ github.sha }}
