@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { AxiosResponse } from 'axios';
 
 @Injectable()
-export class CompileService {
+export class CompilerService {
   constructor(private readonly http: HttpService) {}
 
   async compile(
