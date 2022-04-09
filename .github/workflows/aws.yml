@@ -27,5 +27,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         port: 22
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: projet-annuel/*
+        source: ./src
         target: "/home/${{ secrets.USERNAME }}"
