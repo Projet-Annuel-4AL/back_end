@@ -24,4 +24,4 @@ jobs:
 
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 sync . s3://arn:aws:s3:::projet-annuel
+        aws s3 sync . s3://http://projet-annuel.s3-website.eu-west-3.amazonaws.com
