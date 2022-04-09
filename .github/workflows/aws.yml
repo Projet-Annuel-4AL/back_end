@@ -16,11 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the files
-      uses: actions/checkout@v2
-    - name: Deploy to Server 1
-      uses: easingthemes/ssh-deploy@main
-    env:
-      SSH_PRIVATE_KEY: ${ { secrets.EC2_SSH_KEY }}
-      REMOTE_HOST: ${ { secrets.HOST_DNS }}
-      REMOTE_USER: ${ { secrets.USERNAME }}
-      TARGET: ${ { secrets.TARGET_DIR }}
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET }}
+        aws-region: eu-west-1
+
+    - name: Copy files to the test website with the AWS CLI
+      run: |
+        aws s3 sync . s3://arn:aws:s3:::projet-annuel
