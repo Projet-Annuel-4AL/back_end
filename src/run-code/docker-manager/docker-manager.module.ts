@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { DockerManagerService } from './docker-manager.service';
 
-@Module({})
+@Module({
+  providers: [DockerManagerService],
+})
 export class DockerManagerModule {}
