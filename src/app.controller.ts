@@ -32,4 +32,9 @@ export class AppController {
       req.body.input,
     );
   }
+
+  @Get()
+  findAll(): string {
+    return 'This action returns home';
+  }
 }
