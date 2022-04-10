@@ -7,4 +7,6 @@ export class ExecutionScript {
 
   static readonly CPP =
     '#!/usr/bin/env bash\n' + 'g++ main.cpp -o exec\n' + './exec';
+
+  static readonly PYTHON = '#!/usr/bin/env bash\n' + 'python3 main.py';
 }

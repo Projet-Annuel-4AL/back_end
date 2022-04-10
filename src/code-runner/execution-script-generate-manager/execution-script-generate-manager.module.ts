@@ -3,5 +3,6 @@ import { ExecutionScriptGenerateManagerService } from './execution-script-genera
 
 @Module({
   providers: [ExecutionScriptGenerateManagerService],
+  exports: [ExecutionScriptGenerateManagerService],
 })
 export class ExecutionScriptGenerateManagerModule {}

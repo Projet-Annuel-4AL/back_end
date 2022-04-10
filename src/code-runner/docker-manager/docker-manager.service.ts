@@ -4,15 +4,15 @@ import { exec } from 'shelljs';
 
 @Injectable()
 export class DockerManagerService {
-  static buildImage(folderName, imageName) {
+  buildImage(folderName, imageName) {
     exec('docker image build ' + folderName + ' -t ' + imageName);
   }
 
-  static runImage(imageName) {
+  runImage(imageName) {
     return exec('docker run --rm ' + imageName).stdout;
   }
 
-  static getImageName(language: Language): string {
+  getImageName(language: Language): string {
     switch (language) {
       case Language.Python:
         return 'pyhton';

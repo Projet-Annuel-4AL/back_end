@@ -1,22 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { Language } from '../enum/language';
-import { rmSync, writeFile } from 'fs';
+import { rmSync, writeFileSync } from 'fs';
 
 @Injectable()
 export class FileManagerService {
-  static createFile(path: string, code: string) {
-    writeFile(path, code, function (err) {
-      if (err) return console.log(err);
-      console.log('Main class is created successfully.');
-    });
+  createFile(path: string, code: string) {
+    writeFileSync(path, code);
+    console.log('Main class is created successfully.');
   }
 
-  static deleteFile(path: string) {
+  removeFile(path: string) {
     rmSync(path);
+    console.log('Main class is removed successfully.');
   }
 
-  static getFolderName(language: Language): string {
-    let folderName = 'execution_environments/';
+  getFolderName(language: Language): string {
+    let folderName = './execution_environments/';
     switch (language) {
       case Language.Java:
         folderName += 'java/';
@@ -33,7 +32,7 @@ export class FileManagerService {
     return folderName;
   }
 
-  static getFileName(language: Language): string {
+  getFileName(language: Language): string {
     let fileName = 'main.';
     switch (language) {
       case Language.Java:

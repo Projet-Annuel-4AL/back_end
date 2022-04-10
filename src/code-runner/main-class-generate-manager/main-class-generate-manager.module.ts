@@ -3,5 +3,6 @@ import { MainClassGenerateManagerService } from './main-class-generate-manager.s
 
 @Module({
   providers: [MainClassGenerateManagerService],
+  exports: [MainClassGenerateManagerService],
 })
 export class MainClassGenerateManagerModule {}
