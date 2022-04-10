@@ -21,5 +21,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: ./src
-        target: "home/${{ secrets.USERNAME }}"
+        source: ./
+        target: ${{ secrets.DIR_TARGET }}
