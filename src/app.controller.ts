@@ -35,6 +35,6 @@ export class AppController {
 
   @Get()
   findAll(): string {
-    return 'This action returns home';
+    return 'This action home';
   }
 }
