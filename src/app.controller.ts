@@ -12,12 +12,6 @@ export class AppController {
   ) {}
 
   @UseGuards(LocalAuthGuard)
-  @Get('/')
-  home() {
-    return 'hello';
-  }
-
-  @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {
     return this.authService.login(req.user);
@@ -37,5 +31,10 @@ export class AppController {
       req.body.language,
       req.body.input,
     );
+  }
+
+  @Get()
+  findAll(): string {
+    return 'This action returns home';
   }
 }
