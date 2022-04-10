@@ -6,7 +6,7 @@ on:
       - test
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
 
@@ -23,4 +23,4 @@ jobs:
         port: ${{ secrets.PORT }}
         key: ${{ secrets.EC2_SSH_KEY }}
         source: ./
-        target: "/home/${{ secrets.USERNAME }}"
+        target: "/home/${{ secrets.USERNAME }}/projet-annuel"
