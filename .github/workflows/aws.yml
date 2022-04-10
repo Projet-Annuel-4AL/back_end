@@ -25,4 +25,5 @@ jobs:
         port: 22
         key: ${{ secrets.EC2_SSH_KEY }}
         source: ./src
-        target: ${{ secrets.DIR_TARGET }}
+        target: "home/${{ secrets.USERNAME }}"
+        command_timeout: "30s"
