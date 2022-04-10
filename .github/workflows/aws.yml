@@ -14,9 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: "16.x"
     - name: Deploy Files
       uses: appleboy/scp-action@master
       with:
@@ -26,4 +23,3 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         source: ./src
         target: "home/${{ secrets.USERNAME }}"
-        command_timeout: "30s"
