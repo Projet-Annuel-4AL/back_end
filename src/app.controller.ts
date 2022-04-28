@@ -2,18 +2,18 @@ import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth-guard';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth-guard';
-import { CompileService } from './compile/compile.service';
+import { CodeRunnerService } from './code-runner/code-runner.service';
 
 @Controller()
 export class AppController {
   constructor(
     private authService: AuthService,
-    private compileService: CompileService,
+    private codeRunner: CodeRunnerService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
-  async login(@Request() req) {
+  login(@Request() req) {
     return this.authService.login(req.user);
   }
 
@@ -23,14 +23,9 @@ export class AppController {
     return req.user;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Post('compile')
-  compile(@Request() req) {
-    return this.compileService.compile(
-      req.body.code,
-      req.body.language,
-      req.body.input,
-    );
+  @Post('compiler')
+  async compiler(@Request() req) {
+    return this.codeRunner.runCode(req.body.code, req.body.language);
   }
 
   @Get()
