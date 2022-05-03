@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.3",
     "@types/shelljs": "^0.8.11",
+    "class-validator": "^0.13.2",
     "file-system": "^2.2.2",
     "jest-jasmine2": "^27.5.1",
     "passport": "^0.5.2",
