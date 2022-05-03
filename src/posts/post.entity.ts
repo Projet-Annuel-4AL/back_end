@@ -9,11 +9,11 @@ export class Post {
   @Column({ name: 'title' })
   title: string;
 
-  @Column({ name: 'date' })
-  date: Date;
+  @Column({ name: 'datePost' })
+  datePost: Date;
 
-  @Column({ name: 'mail' })
-  mail: string;
+  @Column({ name: 'idContent' })
+  idContent: string;
 
   @Column({ name: 'description' })
   description: string;

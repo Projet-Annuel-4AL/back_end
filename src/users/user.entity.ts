@@ -12,13 +12,13 @@ export class User {
   @Column({ name: 'lastName' })
   lastName: string;
 
-  @Column({ name: 'mail' })
+  @Column({ name: 'userMail' })
   mail: string;
 
-  @Column({ name: 'password' })
+  @Column({ name: 'userPassword' })
   password: string;
 
-  @Column({ name: 'lastName' })
+  @Column({ name: 'idAdress' })
   idAddress: string;
 
   @OneToMany(() => Post, (post) => post.idUser)
