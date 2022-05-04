@@ -21,6 +21,10 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
+  async getAll(): Promise<User[]> {
+    return await this.userRepository.find();
+  }
+
   async findByUserId(userId: number): Promise<User> {
     const users = await this.userRepository.find({
       where: { id: userId },
@@ -30,7 +34,7 @@ export class UsersService {
 
   async findByMail(userMail: string): Promise<User | undefined> {
     const users = await this.userRepository.find({
-      where: { userMail: userMail },
+      where: { mail: userMail },
     });
     return users[0];
   }
