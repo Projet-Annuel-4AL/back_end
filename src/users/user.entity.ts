@@ -15,7 +15,7 @@ export class User {
   @Column({ name: 'user_mail' })
   mail: string;
 
-  @Column({ name: 'user_Password' })
+  @Column({ name: 'user_password' })
   password: string;
 
   @Column({ name: 'id_address' })
