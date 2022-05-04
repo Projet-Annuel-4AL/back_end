@@ -6,6 +6,9 @@ import { UsersModule } from './users/users.module';
 import { CodeRunnerModule } from './code-runner/code-runner.module';
 import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { config } from 'dotenv';
+
+config();
 
 @Module({
   imports: [
