@@ -32,11 +32,6 @@ export class AppController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
-  }
-
   @Post('compiler')
   async compiler(@Request() req) {
     return this.codeRunner.runCode(req.body.code, req.body.language);
@@ -48,6 +43,7 @@ export class AppController {
     return this.postsService.getAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('posts')
   createPost(@Body() createPost: CreatePostDto) {
     console.log(createPost);
