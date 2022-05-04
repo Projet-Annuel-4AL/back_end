@@ -10,9 +10,8 @@ export class UsersService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async createPost(userCreate: CreateUserDto) {
+  async createUser(userCreate: CreateUserDto) {
     const user = this.userRepository.create({
-      id: userCreate.id,
       firstName: userCreate.firstName,
       lastName: userCreate.lastName,
       mail: userCreate.mail,
