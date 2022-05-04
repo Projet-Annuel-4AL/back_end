@@ -15,15 +15,18 @@ export class PostsService {
 
   async createPost(postCreate: CreatePostDto) {
     const post = this.postRepository.create({
-      id: postCreate.id,
       title: postCreate.title,
       datePost: postCreate.datePost,
       description: postCreate.description,
       contentType: postCreate.contentType,
       idContent: postCreate.idContent,
-      idUser: await this.usersService.findByUserId(postCreate.idUser),
+      idUser: postCreate.idUser,
     });
     return this.postRepository.save(post);
+  }
+
+  async getAll(): Promise<Post[]> {
+    return await this.postRepository.find();
   }
 
   async findByPostId(postId: number): Promise<Post> {
