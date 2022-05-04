@@ -1,24 +1,24 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Post } from '../posts/post.entity';
 
-@Entity('users')
+@Entity('user')
 export class User {
-  @PrimaryGeneratedColumn({ name: 'idUser' })
+  @PrimaryGeneratedColumn({ name: 'id_user' })
   id: number;
 
-  @Column({ name: 'firstName' })
+  @Column({ name: 'first_name' })
   firstName: string;
 
-  @Column({ name: 'lastName' })
+  @Column({ name: 'last_name' })
   lastName: string;
 
-  @Column({ name: 'userMail' })
+  @Column({ name: 'user_mail' })
   mail: string;
 
-  @Column({ name: 'userPassword' })
+  @Column({ name: 'user_Password' })
   password: string;
 
-  @Column({ name: 'idAdress' })
+  @Column({ name: 'id_address' })
   idAddress: string;
 
   @OneToMany(() => Post, (post) => post.idUser)

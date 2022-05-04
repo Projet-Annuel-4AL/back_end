@@ -3,24 +3,24 @@ import { User } from '../users/user.entity';
 
 @Entity('post')
 export class Post {
-  @PrimaryGeneratedColumn({ name: 'idPost' })
+  @PrimaryGeneratedColumn({ name: 'id_post' })
   id: number;
 
   @Column({ name: 'title' })
   title: string;
 
-  @Column({ name: 'datePost' })
+  @Column({ name: 'date_post' })
   datePost: Date;
 
-  @Column({ name: 'idContent' })
-  idContent: string;
+  @Column({ name: 'id_content' })
+  idContent: number;
 
   @Column({ name: 'description' })
   description: string;
 
-  @Column({ name: 'contentType' })
+  @Column({ name: 'content_type' })
   contentType: string;
 
   @OneToMany(() => User, (user) => user.id)
-  idUser: User;
+  idUser: number;
 }
