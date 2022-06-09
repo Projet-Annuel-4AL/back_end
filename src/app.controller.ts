@@ -1,14 +1,22 @@
-import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Get,
+  Post,
+  UseGuards,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth-guard';
 import { AuthService } from './auth/auth.service';
-import { JwtAuthGuard } from './auth/jwt-auth-guard';
-import { CodeRunnerService } from './code-runner/code-runner.service';
+import { UsersService } from './users/users.service';
+import { CreateUserDto } from './users/create-user.dto';
 
-@Controller()
+@Controller('api/')
 export class AppController {
   constructor(
+    private usersService: UsersService,
     private authService: AuthService,
-    private codeRunner: CodeRunnerService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -17,19 +25,20 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  @Get('users')
+  findAllUser() {
+    console.log(this.usersService.getAll());
+    return this.usersService.getAll();
   }
 
-  @Post('compiler')
-  async compiler(@Request() req) {
-    return this.codeRunner.runCode(req.body.code, req.body.language);
+  @Post('users')
+  createUser(@Body() createUser: CreateUserDto) {
+    console.log(createUser);
+    return this.usersService.createUser(createUser);
   }
 
-  @Get()
-  findAll(): string {
-    return 'This action returns home';
+  @Get('users/:mail')
+  async getUserByMail(@Param('mail') mail) {
+    return this.usersService.findByMail(mail);
   }
 }
