@@ -37,7 +37,7 @@ export class AppController {
     return this.usersService.createUser(createUser);
   }
 
-  @Get('usersByMail/:mail')
+  @Get('users/:mail')
   async getUserByMail(@Param('mail') mail) {
     return this.usersService.findByMail(mail);
   }
