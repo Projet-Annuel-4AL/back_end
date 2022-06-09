@@ -25,7 +25,6 @@ config();
     AuthModule,
     UsersModule,
     CodeRunnerModule,
-    CodeRunnerModule,
     PostsModule,
   ],
   controllers: [AppController],

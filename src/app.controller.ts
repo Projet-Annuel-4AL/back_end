@@ -9,45 +9,20 @@ import {
 } from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth-guard';
 import { AuthService } from './auth/auth.service';
-import { JwtAuthGuard } from './auth/jwt-auth-guard';
-import { CodeRunnerService } from './code-runner/code-runner.service';
-import { PostsService } from './posts/posts.service';
-import { CreatePostDto } from './posts/create-post.dto';
 import { UsersService } from './users/users.service';
 import { CreateUserDto } from './users/create-user.dto';
 
-@Controller()
+@Controller('api/')
 export class AppController {
   constructor(
-    private postsService: PostsService,
     private usersService: UsersService,
     private authService: AuthService,
-    private codeRunner: CodeRunnerService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   login(@Request() req) {
     return this.authService.login(req.user);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('compiler')
-  async compiler(@Request() req) {
-    return this.codeRunner.runCode(req.body.code, req.body.language);
-  }
-
-  @Get('posts')
-  findAllPost() {
-    console.log(this.postsService.getAll());
-    return this.postsService.getAll();
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('posts')
-  createPost(@Body() createPost: CreatePostDto) {
-    console.log(createPost);
-    return this.postsService.createPost(createPost);
   }
 
   @Get('users')
