@@ -16,10 +16,11 @@ export class PostsService {
   async createPost(postCreate: CreatePostDto) {
     const post = this.postRepository.create({
       title: postCreate.title,
-      datePost: postCreate.datePost,
-      description: postCreate.description,
-      contentType: postCreate.contentType,
-      idContent: postCreate.idContent,
+      createdDate: postCreate.createdDate,
+      idVideo: postCreate.idVideo,
+      idPicture: postCreate.idPicture,
+      idCode: postCreate.idCode,
+      idText: postCreate.idText,
       idUser: postCreate.idUser,
     });
     return this.postRepository.save(post);

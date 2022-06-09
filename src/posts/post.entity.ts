@@ -9,18 +9,22 @@ export class Post {
   @Column({ name: 'title' })
   title: string;
 
-  @Column({ name: 'date_post' })
-  datePost: Date;
+  @Column({ name: 'created_date' })
+  createdDate: Date;
 
-  @Column({ name: 'id_content' })
-  idContent: number;
+  @Column({ name: 'id_video' })
+  idVideo: number;
 
-  @Column({ name: 'description' })
-  description: string;
+  @Column({ name: 'id_picture' })
+  idPicture: number;
 
-  @Column({ name: 'content_type' })
-  contentType: string;
+  @Column({ name: 'id_text' })
+  idText: number;
 
-  @OneToMany(() => User, (user) => user.id)
+  @Column({ name: 'id_code' })
+  idCode: number;
+
+  //@OneToMany(() => User, (user) => user.id)
+  @Column({ name: 'id_user' })
   idUser: number;
 }

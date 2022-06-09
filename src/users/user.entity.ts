@@ -12,10 +12,10 @@ export class User {
   @Column({ name: 'last_name' })
   lastName: string;
 
-  @Column({ name: 'user_mail' })
+  @Column({ name: 'mail' })
   mail: string;
 
-  @Column({ name: 'user_password' })
+  @Column({ name: 'password' })
   password: string;
 
   @Column({ name: 'id_address' })
