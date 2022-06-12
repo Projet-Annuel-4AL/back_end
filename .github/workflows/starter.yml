@@ -23,18 +23,11 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     - name: Make envfile
-      uses: SpicyPizza/create-envfile@v1.3
+    - uses: actions/checkout@v2
+    - uses: 1arp/create-a-file-action@0.2
       with:
-        envkey_DEBUG: false
-        DB_HOST: ${{ secrets.ENV_DB_HOST }}
-        DB_PORT: ${{ secrets.ENV_DB_PORT }}
-        DB_USER: ${{ secrets.ENV_DB_USER }}
-        DB_PASSWORD: ${{ secrets.ENV_DB_PASSWORD }}
-        DB_DATABASE: ${{ secrets.ENV_DB_DATABASE }}
-        ACCESS_TOKEN_SECRET: ${{ secrets.ENV_ACCESS_TOKEN_SECRET }}
-        ACCESS_TOKEN_EXPIRATION: ${{ secrets.ENV_ACCESS_TOKEN_EXPIRATION }}
-        REFRESH_TOKEN_SECRET: ${{ secrets.ENV_REFRESH_TOKEN_SECRET }}
-        REFRESH_TOKEN_EXPIRATION: ${{ secrets.ENV_REFRESH_TOKEN_EXPIRATION }}
-        directory: ${{ secrets.ENV_DIR_TARGET }}
-        file_name: .env
-        fail_on_empty: false
+          path: ''
+          file: 'foo.bar'
+          content: |
+            Hello
+            World
