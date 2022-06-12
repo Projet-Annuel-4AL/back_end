@@ -7,7 +7,6 @@ jobs:
   build:
     uses: ./.github/workflows/starter.yml
   makeEnvironmentFile:
-    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Make Environment File

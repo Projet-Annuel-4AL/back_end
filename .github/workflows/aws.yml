@@ -9,8 +9,8 @@ on:
       - master
 
 jobs:
-  build:
-    uses: ./.github/workflows/starter.yml
+  makeEnvironmentFile:
+    uses: ./.github/workflows/makeEnv.yml
   deploy:
     needs: build
     runs-on: ubuntu-latest
