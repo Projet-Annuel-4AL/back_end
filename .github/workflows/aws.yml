@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  makeEnvironmentFile:
+  build:
     uses: ./.github/workflows/starter.yml
   deploy:
     needs: build
