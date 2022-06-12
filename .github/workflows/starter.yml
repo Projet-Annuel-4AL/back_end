@@ -30,7 +30,7 @@ jobs:
           DB_PASSWORD: ${{ secrets.ENV_DB_PASSWORD }}
           DB_DATABASE: ${{ secrets.ENV_DB_DATABASE }}
       run: |
-        tocuh .env
+        touch .env
         echo DB_HOST= "$DB_HOST" >> .env
         echo DB_PORT= "$DB_PORT" >> .env
         echo DB_USER= "$DB_USER" >> .env
