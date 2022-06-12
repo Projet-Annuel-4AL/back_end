@@ -29,5 +29,5 @@ jobs:
           path: ''
           file: 'foo.bar'
           content: |
-            Hello
+            k
             World
