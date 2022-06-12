@@ -30,13 +30,19 @@ jobs:
           DB_PASSWORD: ${{ secrets.ENV_DB_PASSWORD }}
           DB_DATABASE: ${{ secrets.ENV_DB_DATABASE }}
       run: |
-        cat <<EOF > .env
+        tocuh .env
         echo DB_HOST= "$DB_HOST" >> .env
         echo DB_PORT= "$DB_PORT" >> .env
         echo DB_USER= "$DB_USER" >> .env
         echo DB_PASSWORD= "$DB_PASSWORD" >> .env
         echo DB_DATABASE= "$DB_DATABASE" >> .env
-        EOF
         
         echo "cat .env"
           cat .env
+          
+        echo "ls -a ."
+          ls -a .
+
+        echo "ls -a ${{ github.workspace }}"
+        ls -a ${{ github.workspace }}
+      shell: bash
