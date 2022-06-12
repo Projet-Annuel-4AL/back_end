@@ -7,6 +7,8 @@ import { CodeRunnerModule } from './code-runner/code-runner.module';
 import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
+import { LikesModule } from './likes/likes.module';
+import { RemarksModule } from './remarks/remarks.module';
 
 config();
 
@@ -26,6 +28,8 @@ config();
     UsersModule,
     CodeRunnerModule,
     PostsModule,
+    LikesModule,
+    RemarksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

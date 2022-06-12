@@ -42,4 +42,8 @@ export class PostsService {
       where: { idUser: userId },
     });
   }
+
+  deletePostById(postId: number) {
+    this.postRepository.delete(postId);
+  }
 }
