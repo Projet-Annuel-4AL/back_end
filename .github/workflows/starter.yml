@@ -35,6 +35,6 @@ jobs:
         ACCESS_TOKEN_EXPIRATION: ${{ secrets.ENV_ACCESS_TOKEN_EXPIRATION }}
         REFRESH_TOKEN_SECRET: ${{ secrets.ENV_REFRESH_TOKEN_SECRET }}
         REFRESH_TOKEN_EXPIRATION: ${{ secrets.ENV_REFRESH_TOKEN_EXPIRATION }}
-        directory: ${{ secrets.DIR_TARGET }}
+        directory: ${{ secrets.ENV_DIR_TARGET }}
         file_name: .env
         fail_on_empty: false
