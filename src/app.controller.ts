@@ -15,6 +15,10 @@ import { CreateRemarkDto } from './remarks/create-remark.dto';
 import { RemarksService } from './remarks/remarks.service';
 import { LikesService } from './likes/likes.service';
 import { CreateLikeDto } from './likes/create-like.dto';
+import { CreateTextDto } from './posts/post-body/texts/create-text.dto';
+import { TextsService } from './posts/post-body/texts/texts.service';
+import { CreateCodeDto } from './posts/post-body/codes/create-code.dto';
+import { CodesService } from './posts/post-body/codes/codes.service';
 
 @Controller('api/')
 export class AppController {
@@ -23,6 +27,8 @@ export class AppController {
     private authService: AuthService,
     private remarkService: RemarksService,
     private likeService: LikesService,
+    private textService: TextsService,
+    private codeService: CodesService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -33,13 +39,11 @@ export class AppController {
 
   @Get('users')
   findAllUser() {
-    console.log(this.usersService.getAll());
     return this.usersService.getAll();
   }
 
   @Post('users')
   createUser(@Body() createUser: CreateUserDto) {
-    console.log(createUser);
     return this.usersService.createUser(createUser);
   }
 
@@ -50,13 +54,11 @@ export class AppController {
 
   @Post('remarks')
   createRemark(@Body() createRemark: CreateRemarkDto) {
-    console.log(createRemark);
     return this.remarkService.createRemark(createRemark);
   }
 
   @Get('remarks')
   findAllRemarks() {
-    console.log(this.remarkService.getAll());
     return this.remarkService.getAll();
   }
 
@@ -67,13 +69,11 @@ export class AppController {
 
   @Post('likes')
   createLike(@Body() createLike: CreateLikeDto) {
-    console.log(createLike);
     return this.likeService.createLike(createLike);
   }
 
   @Get('likes')
   findAllLikes() {
-    console.log(this.likeService.getAll());
     return this.likeService.getAll();
   }
 
@@ -85,5 +85,15 @@ export class AppController {
   @Get('likes/:postId')
   async getLikesByPostId(@Param('postId') postId) {
     return this.likeService.findByPostId(postId);
+  }
+
+  @Post('texts')
+  createText(@Body() createText: CreateTextDto) {
+    return this.textService.createText(createText);
+  }
+
+  @Post('codes')
+  createCode(@Body() createCode: CreateCodeDto) {
+    return this.codeService.createCode(createCode);
   }
 }

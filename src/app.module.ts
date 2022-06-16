@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 import { LikesModule } from './likes/likes.module';
 import { RemarksModule } from './remarks/remarks.module';
+import { TextsModule } from './posts/post-body/texts/texts.module';
+import { CodesModule } from './posts/post-body/codes/codes.module';
 
 config();
 
@@ -30,6 +32,8 @@ config();
     PostsModule,
     LikesModule,
     RemarksModule,
+    TextsModule,
+    CodesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

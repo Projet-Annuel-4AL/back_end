@@ -9,14 +9,12 @@ export class PostsController {
 
   @Get()
   findAllPost() {
-    console.log(this.postsService.getAll());
     return this.postsService.getAll();
   }
 
   @UseGuards(JwtAuthGuard)
   @Post()
   createPost(@Body() createPost: CreatePostDto) {
-    console.log(createPost);
     return this.postsService.createPost(createPost);
   }
 }
