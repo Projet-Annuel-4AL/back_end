@@ -52,6 +52,11 @@ export class AppController {
     return this.usersService.findByMail(mail);
   }
 
+  @Get('users/id/:userId')
+  async getUserById(@Param('userId') userId) {
+    return this.usersService.findByUserId(userId);
+  }
+
   @Post('remarks')
   createRemark(@Body() createRemark: CreateRemarkDto) {
     return this.remarkService.createRemark(createRemark);
