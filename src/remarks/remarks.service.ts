@@ -3,16 +3,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Remark } from './remark.entity';
 import { CreateRemarkDto } from './create-remark.dto';
+import { PostsService } from '../posts/posts.service';
 
 @Injectable()
 export class RemarksService {
   constructor(
     @InjectRepository(Remark) private remarkRepository: Repository<Remark>,
+    private postsService: PostsService,
   ) {}
 
   async createRemark(remarkCreate: CreateRemarkDto) {
-    const remark = this.remarkRepository.create({
-      idPost: remarkCreate.idPost,
+    const remark: Remark = this.remarkRepository.create({
+      post: await this.postsService.findByPostId(remarkCreate.idPost),
       idParentRemark: remarkCreate.idParentRemark,
       content: remarkCreate.content,
     });
@@ -32,7 +34,8 @@ export class RemarksService {
 
   async findByPostId(postId: number): Promise<Remark[]> {
     return await this.remarkRepository.find({
-      where: { idPost: postId },
+      where: { post: postId },
+      relations: ['post'],
     });
   }
 }

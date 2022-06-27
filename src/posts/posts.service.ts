@@ -3,36 +3,42 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './post.entity';
 import { Repository } from 'typeorm';
 import { CreatePostDto } from './create-post.dto';
-import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
+import { TextsService } from './post-body/texts/texts.service';
+import { CodesService } from './post-body/codes/codes.service';
 
 @Injectable()
 export class PostsService {
   constructor(
     @InjectRepository(Post) private postRepository: Repository<Post>,
-    @InjectRepository(User) private usersService: UsersService,
+    private usersService: UsersService,
+    private textsService: TextsService,
+    private codesService: CodesService,
   ) {}
 
   async createPost(postCreate: CreatePostDto) {
-    const post = this.postRepository.create({
+    const post: Post = this.postRepository.create({
       title: postCreate.title,
       createdDate: postCreate.createdDate,
       idVideo: postCreate.idVideo,
       idPicture: postCreate.idPicture,
-      idCode: postCreate.idCode,
-      idText: postCreate.idText,
-      idUser: postCreate.idUser,
+      user: await this.usersService.findByUserId(postCreate.idUser),
+      code: await this.codesService.findByCodeId(postCreate.idCode),
+      text: await this.textsService.findByTextId(postCreate.idText),
     });
     return this.postRepository.save(post);
   }
 
   async getAll(): Promise<Post[]> {
-    return await this.postRepository.find();
+    return await this.postRepository.find({
+      relations: ['user', 'code', 'text'],
+    });
   }
 
   async findByPostId(postId: number): Promise<Post> {
     const posts = await this.postRepository.find({
       where: { id: postId },
+      relations: ['user', 'code', 'text', 'remarks'],
     });
     return posts[0];
   }
@@ -40,6 +46,7 @@ export class PostsService {
   async findByUserId(userId: number): Promise<Post[]> {
     return this.postRepository.find({
       where: { idUser: userId },
+      relations: ['user', 'code', 'text'],
     });
   }
 

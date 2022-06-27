@@ -21,6 +21,6 @@ export class User {
   @Column({ name: 'id_address' })
   idAddress: string;
 
-  @OneToMany(() => Post, (post) => post.idUser)
+  @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 }

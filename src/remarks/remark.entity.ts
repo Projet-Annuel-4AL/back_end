@@ -1,12 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Post } from '../posts/post.entity';
 
 @Entity('remark')
 export class Remark {
   @PrimaryGeneratedColumn({ name: 'id_remark' })
   id: number;
 
-  @Column({ name: 'id_post' })
-  idPost: number;
+  @ManyToOne(() => Post, (post) => post.remarks)
+  @JoinColumn({ name: 'id_post' })
+  post: Post;
 
   @Column({ name: 'id_parent_remark' })
   idParentRemark: number;

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Post } from '../../post.entity';
 
 @Entity('text')
 export class Text {
@@ -7,4 +8,7 @@ export class Text {
 
   @Column({ name: 'content' })
   content: string;
+
+  @OneToOne(() => Post, (post) => post.code)
+  post: Post;
 }
