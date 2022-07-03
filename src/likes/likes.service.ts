@@ -3,23 +3,29 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Like } from './like.entity';
 import { CreateLikeDto } from './create-like.dto';
+import { UsersService } from '../users/users.service';
+import { PostsService } from '../posts/posts.service';
 
 @Injectable()
 export class LikesService {
   constructor(
     @InjectRepository(Like) private likeRepository: Repository<Like>,
+    private usersService: UsersService,
+    private postsService: PostsService,
   ) {}
 
   async createLike(likeCreate: CreateLikeDto) {
     const like = this.likeRepository.create({
-      idUser: likeCreate.idUser,
-      idPost: likeCreate.idPost,
+      user: await this.usersService.findByUserId(likeCreate.idUser),
+      post: await this.postsService.findByPostId(likeCreate.idPost),
     });
     return this.likeRepository.save(like);
   }
 
   async getAll(): Promise<Like[]> {
-    return await this.likeRepository.find();
+    return await this.likeRepository.find({
+      relations: ['user', 'post'],
+    });
   }
 
   async findByLikeId(likeId: number): Promise<Like> {

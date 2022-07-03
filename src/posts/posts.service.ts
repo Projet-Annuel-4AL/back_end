@@ -31,7 +31,7 @@ export class PostsService {
 
   async getAll(): Promise<Post[]> {
     return await this.postRepository.find({
-      relations: ['user', 'code', 'text'],
+      relations: ['user', 'code', 'text', 'likes'],
     });
   }
 

@@ -11,6 +11,7 @@ import { User } from '../users/user.entity';
 import { Code } from './post-body/codes/code.entity';
 import { Text } from './post-body/texts/text.entity';
 import { Remark } from '../remarks/remark.entity';
+import { Like } from '../likes/like.entity';
 
 @Entity('post')
 export class Post {
@@ -43,4 +44,7 @@ export class Post {
 
   @OneToMany(() => Remark, (remark) => remark.post)
   remarks: Remark[];
+
+  @OneToMany(() => Like, (like) => like.post)
+  likes: Like[];
 }

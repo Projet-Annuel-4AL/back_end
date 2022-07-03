@@ -4,12 +4,14 @@ import { Repository } from 'typeorm';
 import { Remark } from './remark.entity';
 import { CreateRemarkDto } from './create-remark.dto';
 import { PostsService } from '../posts/posts.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class RemarksService {
   constructor(
     @InjectRepository(Remark) private remarkRepository: Repository<Remark>,
     private postsService: PostsService,
+    private usersService: UsersService,
   ) {}
 
   async createRemark(remarkCreate: CreateRemarkDto) {
@@ -17,6 +19,7 @@ export class RemarksService {
       post: await this.postsService.findByPostId(remarkCreate.idPost),
       idParentRemark: remarkCreate.idParentRemark,
       content: remarkCreate.content,
+      user: await this.usersService.findByUserId(remarkCreate.idUser),
     });
     return this.remarkRepository.save(remark);
   }

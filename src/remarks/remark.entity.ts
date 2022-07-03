@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Post } from '../posts/post.entity';
+import { User } from '../users/user.entity';
 
 @Entity('remark')
 export class Remark {
@@ -21,4 +22,8 @@ export class Remark {
 
   @Column({ name: 'content' })
   content: string;
+
+  @ManyToOne(() => User, (user) => user.remarks)
+  @JoinColumn({ name: 'id_user' })
+  user: User;
 }
