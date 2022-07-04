@@ -23,9 +23,7 @@ export class LikesService {
   }
 
   async getAll(): Promise<Like[]> {
-    return await this.likeRepository.find({
-      relations: ['user', 'post'],
-    });
+    return await this.likeRepository.find();
   }
 
   async findByLikeId(likeId: number): Promise<Like> {
@@ -41,9 +39,22 @@ export class LikesService {
     });
   }
 
+  async findLikeByUserIdAndPostId(
+    userId: number,
+    postId: number,
+  ): Promise<Like[]> {
+    return await this.likeRepository.find({
+      where: { idPost: postId, idUser: userId },
+    });
+  }
+
   async findByUserId(userId: number): Promise<Like[]> {
     return await this.likeRepository.find({
-      where: { idPost: userId },
+      where: { idUser: userId },
     });
+  }
+
+  async deleteLikesByPostId(id: number) {
+    return await this.likeRepository.delete(id);
   }
 }

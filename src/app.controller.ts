@@ -6,6 +6,8 @@ import {
   UseGuards,
   Body,
   Param,
+  Delete,
+  Query,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth-guard';
 import { AuthService } from './auth/auth.service';
@@ -78,8 +80,18 @@ export class AppController {
   }
 
   @Get('likes')
-  findAllLikes() {
+  findAllLikes(
+    @Query('userId') userId?: number,
+    @Query('postId') postId?: number,
+  ) {
+    if (this.isNotEmptyParam(userId) && this.isNotEmptyParam(postId)) {
+      return this.likeService.findLikeByUserIdAndPostId(userId, postId);
+    }
     return this.likeService.getAll();
+  }
+
+  isNotEmptyParam(param: number): boolean {
+    return param != null;
   }
 
   @Get('likes/:userId')
@@ -90,6 +102,11 @@ export class AppController {
   @Get('likes/:postId')
   async getLikesByPostId(@Param('postId') postId) {
     return this.likeService.findByPostId(postId);
+  }
+
+  @Delete('likes/:likeId')
+  async deleteLikesByPostId(@Param('likeId') likeId) {
+    return this.likeService.deleteLikesByPostId(likeId);
   }
 
   @Post('texts')

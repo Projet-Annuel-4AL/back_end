@@ -14,7 +14,10 @@ export class Like {
   id: number;
 
   @Column({ name: 'id_user' })
-  userId: number;
+  idUser: number;
+
+  @Column({ name: 'id_post' })
+  idPost: number;
 
   @ManyToOne(() => User, (user) => user.likes)
   @JoinColumn({ name: 'id_user' })
