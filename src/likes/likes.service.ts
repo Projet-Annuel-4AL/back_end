@@ -42,10 +42,11 @@ export class LikesService {
   async findLikeByUserIdAndPostId(
     idUser: number,
     idPost: number,
-  ): Promise<Like[]> {
-    return await this.likeRepository.find({
+  ): Promise<Like> {
+    const likes = await this.likeRepository.find({
       where: { idPost: idPost, idUser: idUser },
     });
+    return likes[0];
   }
 
   async findByUserId(userId: number): Promise<Like[]> {
