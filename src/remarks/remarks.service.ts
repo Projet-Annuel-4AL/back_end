@@ -37,8 +37,11 @@ export class RemarksService {
 
   async findByPostId(postId: number): Promise<Remark[]> {
     return await this.remarkRepository.find({
-      where: { post: postId },
-      relations: ['post'],
+      where: { idPost: postId },
     });
+  }
+
+  async deleteRemarksById(id: number) {
+    return await this.remarkRepository.delete(id);
   }
 }

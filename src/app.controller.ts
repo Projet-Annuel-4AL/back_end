@@ -74,6 +74,11 @@ export class AppController {
     return this.remarkService.findByPostId(postId);
   }
 
+  @Delete('remarks/:remarkId')
+  async deleteRemarksById(@Param('remarkId') remarkId) {
+    return this.remarkService.deleteRemarksById(remarkId);
+  }
+
   @Post('likes')
   createLike(@Body() createLike: CreateLikeDto) {
     return this.likeService.createLike(createLike);
@@ -81,11 +86,11 @@ export class AppController {
 
   @Get('likes')
   findAllLikes(
-    @Query('userId') userId?: number,
-    @Query('postId') postId?: number,
+    @Query('idUser') idUser?: number,
+    @Query('postId') idPost?: number,
   ) {
-    if (this.isNotEmptyParam(userId) && this.isNotEmptyParam(postId)) {
-      return this.likeService.findLikeByUserIdAndPostId(userId, postId);
+    if (this.isNotEmptyParam(idUser) && this.isNotEmptyParam(idPost)) {
+      return this.likeService.findLikeByUserIdAndPostId(idUser, idPost);
     }
     return this.likeService.getAll();
   }
@@ -105,8 +110,8 @@ export class AppController {
   }
 
   @Delete('likes/:likeId')
-  async deleteLikesByPostId(@Param('likeId') likeId) {
-    return this.likeService.deleteLikesByPostId(likeId);
+  async deleteLikesById(@Param('likeId') likeId) {
+    return this.likeService.deleteLikesById(likeId);
   }
 
   @Post('texts')

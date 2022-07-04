@@ -40,11 +40,11 @@ export class LikesService {
   }
 
   async findLikeByUserIdAndPostId(
-    userId: number,
-    postId: number,
+    idUser: number,
+    idPost: number,
   ): Promise<Like[]> {
     return await this.likeRepository.find({
-      where: { idPost: postId, idUser: userId },
+      where: { idPost: idPost, idUser: idUser },
     });
   }
 
@@ -54,7 +54,7 @@ export class LikesService {
     });
   }
 
-  async deleteLikesByPostId(id: number) {
+  async deleteLikesById(id: number) {
     return await this.likeRepository.delete(id);
   }
 }

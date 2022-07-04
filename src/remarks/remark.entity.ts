@@ -23,6 +23,12 @@ export class Remark {
   @Column({ name: 'content' })
   content: string;
 
+  @Column({ name: 'id_user' })
+  idUser: number;
+
+  @Column({ name: 'id_user' })
+  idPost: number;
+
   @ManyToOne(() => User, (user) => user.remarks)
   @JoinColumn({ name: 'id_user' })
   user: User;
