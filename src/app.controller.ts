@@ -6,25 +6,17 @@ import {
   UseGuards,
   Body,
   Param,
-  Delete,
-  Query,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth-guard';
 import { AuthService } from './auth/auth.service';
 import { UsersService } from './users/users.service';
 import { CreateUserDto } from './users/create-user.dto';
-import { CreateRemarkDto } from './remarks/create-remark.dto';
-import { RemarksService } from './remarks/remarks.service';
-import { LikesService } from './likes/likes.service';
-import { CreateLikeDto } from './likes/create-like.dto';
 
 @Controller('api/')
 export class AppController {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
-    private remarkService: RemarksService,
-    private likeService: LikesService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -51,60 +43,5 @@ export class AppController {
   @Get('users/id/:userId')
   async getUserById(@Param('userId') userId) {
     return this.usersService.findByUserId(userId);
-  }
-
-  @Post('remarks')
-  createRemark(@Body() createRemark: CreateRemarkDto) {
-    return this.remarkService.createRemark(createRemark);
-  }
-
-  @Get('remarks')
-  findAllRemarks() {
-    return this.remarkService.getAll();
-  }
-
-  @Get('remarks/:postId')
-  async getRemarksByPostId(@Param('postId') postId) {
-    return this.remarkService.findByPostId(postId);
-  }
-
-  @Delete('remarks/:remarkId')
-  async deleteRemarksById(@Param('remarkId') remarkId) {
-    return this.remarkService.deleteRemarksById(remarkId);
-  }
-
-  @Post('likes')
-  createLike(@Body() createLike: CreateLikeDto) {
-    return this.likeService.createLike(createLike);
-  }
-
-  @Get('likes')
-  findAllLikes(
-    @Query('idUser') idUser?: number,
-    @Query('idPost') idPost?: number,
-  ) {
-    if (this.isNotEmptyParam(idUser) && this.isNotEmptyParam(idPost)) {
-      return this.likeService.findLikeByUserIdAndPostId(idUser, idPost);
-    }
-    return this.likeService.getAll();
-  }
-
-  isNotEmptyParam(param: number): boolean {
-    return param != null;
-  }
-
-  @Get('likes/:userId')
-  async getLikesByUserId(@Param('userId') userId) {
-    return this.likeService.findByUserId(userId);
-  }
-
-  @Get('likes/:postId')
-  async getLikesByPostId(@Param('postId') postId) {
-    return this.likeService.findByPostId(postId);
-  }
-
-  @Delete('likes/:likeId')
-  async deleteLikesById(@Param('likeId') likeId) {
-    return this.likeService.deleteLikesById(likeId);
   }
 }
