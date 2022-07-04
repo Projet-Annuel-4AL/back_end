@@ -17,10 +17,6 @@ import { CreateRemarkDto } from './remarks/create-remark.dto';
 import { RemarksService } from './remarks/remarks.service';
 import { LikesService } from './likes/likes.service';
 import { CreateLikeDto } from './likes/create-like.dto';
-import { CreateTextDto } from './posts/post-body/texts/create-text.dto';
-import { TextsService } from './posts/post-body/texts/texts.service';
-import { CreateCodeDto } from './posts/post-body/codes/create-code.dto';
-import { CodesService } from './posts/post-body/codes/codes.service';
 
 @Controller('api/')
 export class AppController {
@@ -29,8 +25,6 @@ export class AppController {
     private authService: AuthService,
     private remarkService: RemarksService,
     private likeService: LikesService,
-    private textService: TextsService,
-    private codeService: CodesService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -87,7 +81,7 @@ export class AppController {
   @Get('likes')
   findAllLikes(
     @Query('idUser') idUser?: number,
-    @Query('postId') idPost?: number,
+    @Query('idPost') idPost?: number,
   ) {
     if (this.isNotEmptyParam(idUser) && this.isNotEmptyParam(idPost)) {
       return this.likeService.findLikeByUserIdAndPostId(idUser, idPost);
@@ -112,15 +106,5 @@ export class AppController {
   @Delete('likes/:likeId')
   async deleteLikesById(@Param('likeId') likeId) {
     return this.likeService.deleteLikesById(likeId);
-  }
-
-  @Post('texts')
-  createText(@Body() createText: CreateTextDto) {
-    return this.textService.createText(createText);
-  }
-
-  @Post('codes')
-  createCode(@Body() createCode: CreateCodeDto) {
-    return this.codeService.createCode(createCode);
   }
 }
