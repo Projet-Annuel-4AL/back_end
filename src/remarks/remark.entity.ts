@@ -26,7 +26,7 @@ export class Remark {
   @Column({ name: 'id_user' })
   idUser: number;
 
-  @Column({ name: 'id_user' })
+  @Column({ name: 'id_post' })
   idPost: number;
 
   @ManyToOne(() => User, (user) => user.remarks)
