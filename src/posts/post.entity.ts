@@ -30,6 +30,9 @@ export class Post {
   @Column({ name: 'id_picture' })
   idPicture: number;
 
+  @Column({ name: 'id_user' })
+  idUser: number;
+
   @OneToOne(() => Text, (text) => text.post)
   @JoinColumn({ name: 'id_text' })
   text: Text;

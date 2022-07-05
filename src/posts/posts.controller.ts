@@ -22,4 +22,9 @@ export class PostsController {
   createPost(@Body() createPost: CreatePostDto) {
     return this.postsService.createPost(createPost);
   }
+
+  @Get('/id/:userId')
+  async findByUserId(@Param('userId') userId: number) {
+    return this.postsService.findByUserId(userId);
+  }
 }
