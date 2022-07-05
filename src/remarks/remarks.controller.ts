@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateRemarkDto } from './create-remark.dto';
 import { RemarksService } from './remarks.service';
 
-@Controller('remarks')
+@Controller('api/remarks')
 export class RemarksController {
   constructor(private remarkService: RemarksService) {}
 
