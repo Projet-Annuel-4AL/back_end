@@ -23,14 +23,14 @@ export class UsersService {
 
   async getAll(): Promise<User[]> {
     return await this.userRepository.find({
-      relations: ['followers'],
+      relations: ['follows'],
     });
   }
 
   async findByUserId(userId: number): Promise<User> {
     const users = await this.userRepository.find({
       where: { id: userId },
-      relations: ['followers', 'likes'],
+      relations: ['follows', 'likes'],
     });
     return users[0];
   }
