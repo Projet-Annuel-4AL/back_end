@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Post } from '../posts/post.entity';
 import { Like } from '../likes/like.entity';
 import { Remark } from '../remarks/remark.entity';
+import { Follow } from '../follows/follow.entity';
 
 @Entity('user')
 export class User {
@@ -31,4 +32,7 @@ export class User {
 
   @OneToMany(() => Remark, (remark) => remark.user)
   remarks: Remark[];
+
+  @OneToMany(() => Follow, (follow) => follow.user)
+  follows: Follow[];
 }

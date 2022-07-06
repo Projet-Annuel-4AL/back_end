@@ -11,6 +11,7 @@ import { LikesModule } from './likes/likes.module';
 import { RemarksModule } from './remarks/remarks.module';
 import { TextsModule } from './posts/post-body/texts/texts.module';
 import { CodesModule } from './posts/post-body/codes/codes.module';
+import { FollowsModule } from './follows/follows.module';
 
 config();
 
@@ -34,6 +35,7 @@ config();
     RemarksModule,
     TextsModule,
     CodesModule,
+    FollowsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

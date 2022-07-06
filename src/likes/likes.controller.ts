@@ -6,14 +6,17 @@ import {
   Param,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateLikeDto } from './create-like.dto';
 import { LikesService } from './likes.service';
+import { JwtAuthGuard } from '../auth/jwt-auth-guard';
 
 @Controller('api/likes')
 export class LikesController {
   constructor(private likesService: LikesService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   createLike(@Body() createLike: CreateLikeDto) {
     return this.likesService.createLike(createLike);
@@ -44,6 +47,7 @@ export class LikesController {
     return this.likesService.findByPostId(postId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/:likeId')
   async deleteLikesById(@Param('likeId') likeId) {
     return this.likesService.deleteLikesById(likeId);
