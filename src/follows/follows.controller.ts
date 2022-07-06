@@ -33,7 +33,7 @@ export class FollowsController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('/:followId')
-  async deleteFollowById(@Param('followerId') followerId) {
-    return this.followersService.deleteFollowById(followerId);
+  async deleteFollowById(@Param('followId') followId) {
+    return this.followersService.deleteFollowById(followId);
   }
 }
