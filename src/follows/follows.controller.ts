@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { FollowsService } from './follows.service';
@@ -22,8 +23,24 @@ export class FollowsController {
   }
 
   @Get()
-  findAllFollows() {
+  findAllFollows(
+    @Query('idUserFollowing') idUserFollowing?: number,
+    @Query('idUserFollowed') idUserFollowed?: number,
+  ) {
+    if (
+      this.isNotEmptyParam(idUserFollowing) &&
+      this.isNotEmptyParam(idUserFollowed)
+    ) {
+      return this.followersService.findFollowByIdUserFollowingdAndIdUserFollower(
+        idUserFollowing,
+        idUserFollowed,
+      );
+    }
     return this.followersService.getAll();
+  }
+
+  isNotEmptyParam(param: number): boolean {
+    return param != null;
   }
 
   @Get('/:userId')

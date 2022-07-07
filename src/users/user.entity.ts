@@ -33,6 +33,9 @@ export class User {
   @OneToMany(() => Remark, (remark) => remark.user)
   remarks: Remark[];
 
-  @OneToMany(() => Follow, (follow) => follow.user)
-  follows: Follow[];
+  @OneToMany(() => Follow, (follow) => follow.idUserFollowed)
+  followed: Follow[];
+
+  @OneToMany(() => Follow, (follow) => follow.idUserFollowing)
+  following: Follow[];
 }
