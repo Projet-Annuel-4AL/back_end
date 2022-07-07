@@ -22,15 +22,13 @@ export class UsersService {
   }
 
   async getAll(): Promise<User[]> {
-    return await this.userRepository.find({
-      relations: ['followed', 'following'],
-    });
+    return await this.userRepository.find();
   }
 
   async findByUserId(userId: number): Promise<User> {
     const users = await this.userRepository.find({
       where: { id: userId },
-      relations: ['followed', 'following', 'likes'],
+      relations: ['likes'],
     });
     return users[0];
   }
