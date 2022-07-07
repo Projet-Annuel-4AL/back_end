@@ -32,6 +32,9 @@ export class PostsService {
   async getAll(): Promise<Post[]> {
     return await this.postRepository.find({
       relations: ['user', 'code', 'text', 'likes', 'remarks'],
+      order: {
+        id: 'DESC',
+      },
     });
   }
 
