@@ -12,6 +12,7 @@ import { RemarksModule } from './remarks/remarks.module';
 import { TextsModule } from './posts/post-body/texts/texts.module';
 import { CodesModule } from './posts/post-body/codes/codes.module';
 import { FollowsModule } from './follows/follows.module';
+import { GroupsModule } from './groups/groups.module';
 
 config();
 
@@ -36,6 +37,7 @@ config();
     TextsModule,
     CodesModule,
     FollowsModule,
+    GroupsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
