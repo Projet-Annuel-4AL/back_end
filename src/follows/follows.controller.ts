@@ -43,6 +43,11 @@ export class FollowsController {
     return param != null;
   }
 
+  @Get('/:followId')
+  async findFollowById(@Param('followId') followId) {
+    return this.followersService.findByFollowId(followId);
+  }
+
   @Get('/following/:userId')
   async findFollowingByUserId(@Param('userId') userId) {
     return this.followersService.findFollowingByUserId(userId);

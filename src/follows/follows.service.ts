@@ -28,6 +28,7 @@ export class FollowsService {
   async findByFollowId(followId: number): Promise<Follow> {
     const follows = await this.followsRepository.find({
       where: { id: followId },
+      relations: ['followedUser', 'followingUser'],
     });
     return follows[0];
   }
