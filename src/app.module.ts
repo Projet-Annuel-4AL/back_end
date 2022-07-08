@@ -13,6 +13,7 @@ import { TextsModule } from './posts/post-body/texts/texts.module';
 import { CodesModule } from './posts/post-body/codes/codes.module';
 import { FollowsModule } from './follows/follows.module';
 import { GroupsModule } from './groups/groups.module';
+import { RelationGroupUserModule } from './relation-group-user/relation-group-user.module';
 
 config();
 
@@ -38,6 +39,7 @@ config();
     CodesModule,
     FollowsModule,
     GroupsModule,
+    RelationGroupUserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

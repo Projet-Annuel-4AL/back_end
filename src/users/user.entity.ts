@@ -3,6 +3,7 @@ import { Post } from '../posts/post.entity';
 import { Like } from '../likes/like.entity';
 import { Remark } from '../remarks/remark.entity';
 import { Follow } from '../follows/follow.entity';
+import { RelationGroupUser } from '../relation-group-user/relation-group-user.entity';
 
 @Entity('user')
 export class User {
@@ -38,4 +39,7 @@ export class User {
 
   @OneToMany(() => Follow, (follow) => follow.idUserFollowing)
   following: Follow[];
+
+  @OneToMany(() => RelationGroupUser, (relation) => relation.user)
+  relations: RelationGroupUser[];
 }
