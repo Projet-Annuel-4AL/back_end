@@ -14,6 +14,7 @@ export class GroupsService {
     const group: Group = this.groupRepository.create({
       name: createGroup.name,
       theme: createGroup.theme,
+      description: createGroup.description,
     });
     return this.groupRepository.save(group);
   }

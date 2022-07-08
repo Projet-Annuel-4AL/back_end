@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { RelationGroupUser } from '../relation-group-user/relation-group-user.entity';
 
 @Entity('group')
 export class Group {
@@ -10,4 +11,10 @@ export class Group {
 
   @Column({ name: 'theme' })
   theme: string;
+
+  @Column({ name: 'description' })
+  description: string;
+
+  @OneToMany(() => RelationGroupUser, (relation) => relation.group)
+  relations: RelationGroupUser[];
 }
