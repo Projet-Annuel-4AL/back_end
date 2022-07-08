@@ -11,7 +11,7 @@ import { GroupsService } from './groups.service';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
 import { CreateGroupDto } from './create-group.dto';
 
-@Controller('groups')
+@Controller('api/groups')
 export class GroupsController {
   constructor(private groupsService: GroupsService) {}
 
