@@ -20,7 +20,9 @@ export class FollowsService {
   }
 
   async getAll(): Promise<Follow[]> {
-    return await this.followsRepository.find();
+    return await this.followsRepository.find({
+      relations: ['followedUser', 'followingUser'],
+    });
   }
 
   async findByFollowId(followId: number): Promise<Follow> {
@@ -39,6 +41,7 @@ export class FollowsService {
         idUserFollowing: idUserFollowing,
         idUserFollowed: idUserFollowed,
       },
+      relations: ['followedUser', 'followingUser'],
     });
     return follows[0];
   }
@@ -46,6 +49,7 @@ export class FollowsService {
   async findFollowsByUserId(idUser: number): Promise<Follow[]> {
     return await this.followsRepository.find({
       where: { idUserFollowed: idUser },
+      relations: ['followingUser'],
     });
   }
 

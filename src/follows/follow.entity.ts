@@ -20,9 +20,9 @@ export class Follow {
 
   @ManyToOne(() => User, (user) => user.followed)
   @JoinColumn({ name: 'id_user_followed' })
-  FollowedUser: User;
+  followedUser: User;
 
   @ManyToOne(() => User, (user) => user.following)
   @JoinColumn({ name: 'id_user_following' })
-  FollowingUser: User;
+  followingUser: User;
 }
