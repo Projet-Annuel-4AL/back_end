@@ -28,4 +28,8 @@ export class CodesService {
     });
     return codes[0];
   }
+
+  deleteCodeById(codeId: number) {
+    this.codeRepository.delete(codeId);
+  }
 }

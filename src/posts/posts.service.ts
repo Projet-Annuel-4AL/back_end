@@ -53,7 +53,17 @@ export class PostsService {
     });
   }
 
-  deletePostById(postId: number) {
-    this.postRepository.delete(postId);
+  async deletePostById(postId: number) {
+    try {
+      const post: Post = await this.findByPostId(postId);
+      await this.postRepository.delete(postId);
+      if (post.code != null) {
+        this.codesService.deleteCodeById(post.code.id);
+      } else if (post.text != null) {
+        this.textsService.deleteTextById(post.text.id);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

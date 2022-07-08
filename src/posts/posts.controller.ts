@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
 import { CreatePostDto } from './create-post.dto';
 import { PostsService } from './posts.service';
@@ -26,5 +34,11 @@ export class PostsController {
   @Get('/id/:userId')
   async findByUserId(@Param('userId') userId: number) {
     return this.postsService.findByUserId(userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:postId')
+  async deletePostById(@Param('postId') postId) {
+    return this.postsService.deletePostById(postId);
   }
 }

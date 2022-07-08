@@ -27,4 +27,8 @@ export class TextsService {
     });
     return texts[0];
   }
+
+  deleteTextById(textId: number) {
+    this.textRepository.delete(textId);
+  }
 }
