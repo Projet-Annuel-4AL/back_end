@@ -14,7 +14,7 @@ export class RemarksService {
     private usersService: UsersService,
   ) {}
 
-  async createRemark(remarkCreate: CreateRemarkDto) {
+  async createRemark(remarkCreate: CreateRemarkDto): Promise<Remark> {
     const remark: Remark = this.remarkRepository.create({
       post: await this.postsService.findByPostId(remarkCreate.idPost),
       idParentRemark: remarkCreate.idParentRemark,
