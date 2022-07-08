@@ -30,7 +30,13 @@ export class GroupsService {
     return groups[0];
   }
 
-  deleteRemarksById(groupId: number) {
+  deleteGroupById(groupId: number) {
     this.groupRepository.delete(groupId);
+  }
+
+  getGroupsByTheme(theme: string): Promise<Group[]> {
+    return this.groupRepository.find({
+      where: { theme: theme },
+    });
   }
 }

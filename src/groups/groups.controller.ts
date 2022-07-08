@@ -26,13 +26,18 @@ export class GroupsController {
     return this.groupsService.getAll();
   }
 
+  @Get('/:theme')
+  getGroupsByTheme(@Param('theme') theme: string) {
+    return this.groupsService.getGroupsByTheme(theme);
+  }
+
   @Get('/:groupId')
-  async getGroupById(@Param('groupId') groupId) {
+  async getGroupById(@Param('groupId') groupId: number) {
     return this.groupsService.findByPostId(groupId);
   }
 
   @Delete('/:groupId')
-  async deleteGroupById(@Param('groupId') groupId) {
-    return this.groupsService.deleteRemarksById(groupId);
+  async deleteGroupById(@Param('groupId') groupId: number) {
+    return this.groupsService.deleteGroupById(groupId);
   }
 }
