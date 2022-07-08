@@ -43,9 +43,14 @@ export class FollowsController {
     return param != null;
   }
 
-  @Get('/:userId')
-  async findFollowsByUserId(@Param('userId') userId) {
-    return this.followersService.findFollowsByUserId(userId);
+  @Get('/following/:userId')
+  async findFollowingByUserId(@Param('userId') userId) {
+    return this.followersService.findFollowingByUserId(userId);
+  }
+
+  @Get('/followed/:userId')
+  async findFollowedByUserId(@Param('userId') userId) {
+    return this.followersService.findFollowedByUserId(userId);
   }
 
   @UseGuards(JwtAuthGuard)
