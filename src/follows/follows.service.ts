@@ -50,18 +50,35 @@ export class FollowsService {
   async findFollowingByUserId(idUser: number): Promise<Follow[]> {
     return await this.followsRepository.find({
       where: { idUserFollowing: idUser },
-      relations: ['followedUser'],
+      relations: ['followingUser'],
     });
   }
 
   async findFollowedByUserId(idUser: number): Promise<Follow[]> {
     return await this.followsRepository.find({
       where: { idUserFollowed: idUser },
-      relations: ['followingUser'],
+      relations: ['followedUser'],
     });
   }
 
   async deleteFollowById(id: number) {
     return await this.followsRepository.delete(id);
+  }
+
+  async findFollowsByUserId(userId: number) {
+    try {
+      const follows: Follow[] = await this.followsRepository.find({
+        where: { idUserFollowed: userId },
+        relations: ['followedUser', 'followingUser'],
+      });
+      const following: Follow[] = await this.followsRepository.find({
+        where: { idUserFollowed: userId },
+        relations: ['followedUser', 'followingUser'],
+      });
+      follows.push(...following);
+      return follows;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -53,6 +53,11 @@ export class FollowsController {
     return this.followersService.findFollowingByUserId(userId);
   }
 
+  @Get('/user/:userId')
+  async findFollowsByUserId(@Param('userId') userId) {
+    return this.followersService.findFollowsByUserId(userId);
+  }
+
   @Get('/followed/:userId')
   async findFollowedByUserId(@Param('userId') userId) {
     return this.followersService.findFollowedByUserId(userId);
