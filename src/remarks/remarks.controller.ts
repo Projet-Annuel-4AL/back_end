@@ -35,4 +35,10 @@ export class RemarksController {
   async deleteRemarksById(@Param('remarkId') remarkId) {
     return this.remarkService.deleteRemarksById(remarkId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/posts/:postId')
+  async deleteRemarksByPostId(@Param('postId') postId) {
+    return this.remarkService.deleteRemarksByPostId(postId);
+  }
 }

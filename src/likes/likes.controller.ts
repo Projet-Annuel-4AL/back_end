@@ -52,4 +52,10 @@ export class LikesController {
   async deleteLikesById(@Param('likeId') likeId) {
     return this.likesService.deleteLikesById(likeId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/posts/:postId')
+  async deleteLikesByPostId(@Param('postId') postId) {
+    return this.likesService.deleteLikesByPostId(postId);
+  }
 }

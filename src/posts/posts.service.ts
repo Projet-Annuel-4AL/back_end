@@ -6,6 +6,8 @@ import { CreatePostDto } from './create-post.dto';
 import { UsersService } from '../users/users.service';
 import { TextsService } from './post-body/texts/texts.service';
 import { CodesService } from './post-body/codes/codes.service';
+import { LikesService } from '../likes/likes.service';
+import { RemarksService } from '../remarks/remarks.service';
 
 @Injectable()
 export class PostsService {
@@ -14,6 +16,8 @@ export class PostsService {
     private usersService: UsersService,
     private textsService: TextsService,
     private codesService: CodesService,
+    private likesService: LikesService,
+    private remarksService: RemarksService,
   ) {}
 
   async createPost(postCreate: CreatePostDto) {
@@ -56,6 +60,8 @@ export class PostsService {
   async deletePostById(postId: number) {
     try {
       const post: Post = await this.findByPostId(postId);
+      await this.remarksService.deleteRemarksByPostId(postId);
+      await this.likesService.deleteLikesByPostId(postId);
       await this.postRepository.delete(postId);
       if (post.code != null) {
         this.codesService.deleteCodeById(post.code.id);
@@ -63,7 +69,7 @@ export class PostsService {
         this.textsService.deleteTextById(post.text.id);
       }
     } catch (error) {
-      console.log(error);
+      console.log('likes delete error: ' + error);
     }
   }
 }

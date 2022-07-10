@@ -26,7 +26,7 @@ export class GroupsController {
     return this.groupsService.getAll();
   }
 
-  @Get('/:theme')
+  @Get('/themes/:theme')
   getGroupsByTheme(@Param('theme') theme: string) {
     return this.groupsService.getGroupsByTheme(theme);
   }

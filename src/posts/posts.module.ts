@@ -2,19 +2,21 @@ import { Module } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from './post.entity';
-import { User } from '../users/user.entity';
 import { PostsController } from './posts.controller';
-import { Text } from './post-body/texts/text.entity';
 import { TextsModule } from './post-body/texts/texts.module';
 import { CodesModule } from './post-body/codes/codes.module';
 import { UsersModule } from '../users/users.module';
+import { LikesModule } from '../likes/likes.module';
+import { RemarksModule } from '../remarks/remarks.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Post, User, Text]),
+    TypeOrmModule.forFeature([Post]),
     TextsModule,
     CodesModule,
     UsersModule,
+    LikesModule,
+    RemarksModule,
   ],
   providers: [PostsService],
   exports: [PostsService],

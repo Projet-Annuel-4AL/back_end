@@ -4,20 +4,23 @@ import { Repository } from 'typeorm';
 import { Like } from './like.entity';
 import { CreateLikeDto } from './create-like.dto';
 import { UsersService } from '../users/users.service';
-import { PostsService } from '../posts/posts.service';
+import { Post } from '../posts/post.entity';
 
 @Injectable()
 export class LikesService {
   constructor(
     @InjectRepository(Like) private likeRepository: Repository<Like>,
     private usersService: UsersService,
-    private postsService: PostsService,
+    @InjectRepository(Post) private postRepository: Repository<Post>,
   ) {}
 
   async createLike(likeCreate: CreateLikeDto) {
+    const posts: Post[] = await this.postRepository.find({
+      where: { id: likeCreate.idPost },
+    });
     const like = this.likeRepository.create({
       user: await this.usersService.findByUserId(likeCreate.idUser),
-      post: await this.postsService.findByPostId(likeCreate.idPost),
+      post: posts[0],
     });
     return this.likeRepository.save(like);
   }
@@ -57,5 +60,16 @@ export class LikesService {
 
   async deleteLikesById(id: number) {
     return await this.likeRepository.delete(id);
+  }
+
+  async deleteLikesByPostId(postId: number) {
+    try {
+      const likes: Like[] = await this.findByPostId(postId);
+      likes.map((like) => {
+        this.deleteLikesById(like.id);
+      });
+    } catch (error) {
+      console.log('likes delete error: ' + error);
+    }
   }
 }
