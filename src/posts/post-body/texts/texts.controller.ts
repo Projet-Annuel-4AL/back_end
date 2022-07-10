@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { CreateTextDto } from './create-text.dto';
 import { TextsService } from './texts.service';
 import { JwtAuthGuard } from '../../../auth/jwt-auth-guard';
@@ -11,5 +11,10 @@ export class TextsController {
   @Post()
   createText(@Body() createText: CreateTextDto) {
     return this.textService.createText(createText);
+  }
+
+  @Get()
+  findAllText() {
+    return this.textService.getAll();
   }
 }
