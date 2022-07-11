@@ -50,14 +50,14 @@ export class FollowsService {
   async findFollowingByUserId(idUser: number): Promise<Follow[]> {
     return await this.followsRepository.find({
       where: { idUserFollowing: idUser },
-      relations: ['followingUser'],
+      relations: ['followedUser'],
     });
   }
 
   async findFollowedByUserId(idUser: number): Promise<Follow[]> {
     return await this.followsRepository.find({
       where: { idUserFollowed: idUser },
-      relations: ['followedUser'],
+      relations: ['followingUser'],
     });
   }
 
