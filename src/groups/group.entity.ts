@@ -16,6 +16,9 @@ export class Group {
   @Column({ name: 'description' })
   description: string;
 
+  @Column({ name: 'id_group_owner' })
+  idGroupOwner: number;
+
   @OneToMany(() => RelationGroupUser, (relation) => relation.group)
   relationGroupUsers: RelationGroupUser[];
 

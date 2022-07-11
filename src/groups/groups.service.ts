@@ -15,6 +15,7 @@ export class GroupsService {
       name: createGroup.name,
       theme: createGroup.theme,
       description: createGroup.description,
+      idGroupOwner: createGroup.idGroupOwner,
     });
     return this.groupRepository.save(group);
   }

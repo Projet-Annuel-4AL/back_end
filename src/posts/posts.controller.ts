@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   UseGuards,
@@ -20,6 +21,7 @@ export class PostsController {
     return this.postsService.getAll();
   }
 
+  @HttpCode(200)
   @Get('/:postId')
   getPostById(@Param('postId') postId) {
     return this.postsService.findByPostId(postId);
