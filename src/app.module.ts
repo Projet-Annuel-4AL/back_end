@@ -14,6 +14,7 @@ import { CodesModule } from './posts/post-body/codes/codes.module';
 import { FollowsModule } from './follows/follows.module';
 import { GroupsModule } from './groups/groups.module';
 import { RelationGroupUserModule } from './relation-group-user/relation-group-user.module';
+import { RelationGroupPostModule } from './relation-group-post/relation-group-post.module';
 
 config();
 
@@ -40,6 +41,7 @@ config();
     FollowsModule,
     GroupsModule,
     RelationGroupUserModule,
+    RelationGroupPostModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -12,6 +12,7 @@ import { Code } from './post-body/codes/code.entity';
 import { Text } from './post-body/texts/text.entity';
 import { Remark } from '../remarks/remark.entity';
 import { Like } from '../likes/like.entity';
+import { RelationGroupPost } from '../relation-group-post/relation-group-post.entity';
 
 @Entity('post')
 export class Post {
@@ -50,4 +51,7 @@ export class Post {
 
   @OneToMany(() => Like, (like) => like.post)
   likes: Like[];
+
+  @OneToMany(() => RelationGroupPost, (relation) => relation.post)
+  relationGroupPosts: RelationGroupPost[];
 }

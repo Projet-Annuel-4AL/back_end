@@ -19,11 +19,11 @@ export class RelationGroupUser {
   @Column({ name: 'id_group' })
   idGroup: number;
 
-  @ManyToOne(() => User, (user) => user.relations)
+  @ManyToOne(() => User, (user) => user.relationGroupUsers)
   @JoinColumn({ name: 'id_user' })
   user: User;
 
-  @ManyToOne(() => Group, (group) => group.relations)
+  @ManyToOne(() => Group, (group) => group.relationGroupUsers)
   @JoinColumn({ name: 'id_group' })
   group: Group;
 }

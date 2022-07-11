@@ -41,5 +41,5 @@ export class User {
   following: Follow[];
 
   @OneToMany(() => RelationGroupUser, (relation) => relation.user)
-  relations: RelationGroupUser[];
+  relationGroupUsers: RelationGroupUser[];
 }
