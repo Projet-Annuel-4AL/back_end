@@ -53,7 +53,7 @@ export class PostsService {
   async findByUserId(userId: number): Promise<Post[]> {
     return this.postRepository.find({
       where: { idUser: userId },
-      relations: ['user', 'code', 'text'],
+      relations: ['user', 'code', 'text', 'likes', 'remarks'],
     });
   }
 
