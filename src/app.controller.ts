@@ -1,38 +1,16 @@
-import {
-  Controller,
-  Request,
-  Get,
-  Post,
-  UseGuards,
-  Body,
-  Param,
-} from '@nestjs/common';
-import { LocalAuthGuard } from './auth/local-auth-guard';
-import { AuthService } from './auth/auth.service';
+import { Controller, Get, Param, SerializeOptions } from '@nestjs/common';
 import { UsersService } from './users/users.service';
-import { CreateUserDto } from './users/create-user.dto';
 
 @Controller('api/')
+// @SerializeOptions({
+//   strategy: 'excludeAll',
+//})
 export class AppController {
-  constructor(
-    private usersService: UsersService,
-    private authService: AuthService,
-  ) {}
-
-  @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
-  login(@Request() req) {
-    return this.authService.login(req.user);
-  }
+  constructor(private usersService: UsersService) {}
 
   @Get('users')
   findAllUser() {
     return this.usersService.getAll();
-  }
-
-  @Post('users')
-  createUser(@Body() createUser: CreateUserDto) {
-    return this.usersService.createUser(createUser);
   }
 
   @Get('users/:mail')

@@ -5,6 +5,7 @@ import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserNotFoundByMailException } from './exception/user-not-found-by-mail-exception';
 import { UserNotFoundByIdException } from './exception/user-not-found-by-id-exception';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -23,6 +24,17 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
+  async setCurrentRefreshToken(refreshToken: string, userId: number) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 5);
+    await this.userRepository.update(userId, { currentHashedRefreshToken });
+  }
+
+  async removeCurrentRefreshToken(userId: number) {
+    return this.userRepository.update(userId, {
+      currentHashedRefreshToken: null,
+    });
+  }
+
   async getAll(): Promise<User[]> {
     return await this.userRepository.find();
   }
@@ -34,6 +46,19 @@ export class UsersService {
     });
     if (user) return user;
     throw new UserNotFoundByIdException(userId);
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, userId: number) {
+    const user = await this.findByUserId(userId);
+
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.currentHashedRefreshToken,
+    );
+
+    if (isRefreshTokenMatching) {
+      return user;
+    }
   }
 
   async findByMail(userMail: string): Promise<User> {
