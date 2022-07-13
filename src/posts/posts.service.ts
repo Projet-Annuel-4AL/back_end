@@ -8,6 +8,7 @@ import { TextsService } from './post-body/texts/texts.service';
 import { CodesService } from './post-body/codes/codes.service';
 import { LikesService } from '../likes/likes.service';
 import { RemarksService } from '../remarks/remarks.service';
+import { PostNotFoundByIdException } from './exception/post-not-found-by-id-exception';
 
 @Injectable()
 export class PostsService {
@@ -43,11 +44,14 @@ export class PostsService {
   }
 
   async findByPostId(postId: number): Promise<Post> {
-    const posts = await this.postRepository.find({
+    const post = await this.postRepository.findOne({
       where: { id: postId },
       relations: ['user', 'code', 'text', 'remarks'],
     });
-    return posts[0];
+    if (post) {
+      return post;
+    }
+    throw new PostNotFoundByIdException(postId);
   }
 
   async findByUserId(userId: number): Promise<Post[]> {

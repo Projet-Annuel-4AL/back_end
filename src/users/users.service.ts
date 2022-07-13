@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserNotFoundByMailException } from './exception/user-not-found-by-mail-exception';
+import { UserNotFoundByIdException } from './exception/user-not-found-by-id-exception';
 
 @Injectable()
 export class UsersService {
@@ -26,17 +28,19 @@ export class UsersService {
   }
 
   async findByUserId(userId: number): Promise<User> {
-    const users = await this.userRepository.find({
+    const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ['likes'],
     });
-    return users[0];
+    if (user) return user;
+    throw new UserNotFoundByIdException(userId);
   }
 
-  async findByMail(userMail: string): Promise<User | undefined> {
-    const users = await this.userRepository.find({
+  async findByMail(userMail: string): Promise<User> {
+    const user = await this.userRepository.findOne({
       where: { mail: userMail },
     });
-    return users[0];
+    if (user) return user;
+    throw new UserNotFoundByMailException(userMail);
   }
 }
