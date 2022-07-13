@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserNotFoundByMailException } from './exception/user-not-found-by-mail-exception';
+import { UserNotFoundByIdException } from './exception/user-not-found-by-id-exception';
+import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -21,22 +25,57 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
+  async updateUser(userId: number, userUpdate: UpdateUserDto) {
+    await this.userRepository.update(userId, userUpdate);
+    const updatedUser = await this.userRepository.findOne(userId);
+    if (updatedUser) {
+      return updatedUser;
+    }
+    throw new UserNotFoundByIdException(userId);
+  }
+
+  async setCurrentRefreshToken(refreshToken: string, userId: number) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 5);
+    await this.userRepository.update(userId, { currentHashedRefreshToken });
+  }
+
+  async removeCurrentRefreshToken(userId: number) {
+    return this.userRepository.update(userId, {
+      currentHashedRefreshToken: null,
+    });
+  }
+
   async getAll(): Promise<User[]> {
     return await this.userRepository.find();
   }
 
   async findByUserId(userId: number): Promise<User> {
-    const users = await this.userRepository.find({
+    const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ['likes'],
     });
-    return users[0];
+    if (user) return user;
+    throw new UserNotFoundByIdException(userId);
   }
 
-  async findByMail(userMail: string): Promise<User | undefined> {
-    const users = await this.userRepository.find({
+  async getUserIfRefreshTokenMatches(refreshToken: string, userId: number) {
+    const user = await this.findByUserId(userId);
+
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.currentHashedRefreshToken,
+    );
+
+    if (isRefreshTokenMatching) {
+      return user;
+    }
+  }
+
+  async findByMail(userMail: string): Promise<User> {
+    const user = await this.userRepository.findOne({
       where: { mail: userMail },
     });
-    return users[0];
+    if (user) return user;
+    throw new UserNotFoundByMailException(userMail);
   }
 }

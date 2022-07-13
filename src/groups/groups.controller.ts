@@ -4,12 +4,14 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
-import { CreateGroupDto } from './create-group.dto';
+import { CreateGroupDto } from './dto/create-group.dto';
+import { UpdateGroupDto } from './dto/update-group.dto';
 
 @Controller('api/groups')
 export class GroupsController {
@@ -19,6 +21,16 @@ export class GroupsController {
   @Post()
   createGroup(@Body() createGroup: CreateGroupDto) {
     return this.groupsService.createGroup(createGroup);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':groupId/owner/:userId')
+  async updateGroup(
+    @Param('groupId') groupId: number,
+    @Param('userId') userId: number,
+    @Body() groupUpdate: UpdateGroupDto,
+  ) {
+    return this.groupsService.updateGroup(groupId, userId, groupUpdate);
   }
 
   @Get()
@@ -33,7 +45,7 @@ export class GroupsController {
 
   @Get('/:groupId')
   async getGroupById(@Param('groupId') groupId: number) {
-    return this.groupsService.findByPostId(groupId);
+    return this.groupsService.findByGroupId(groupId);
   }
 
   @Delete('/:groupId')

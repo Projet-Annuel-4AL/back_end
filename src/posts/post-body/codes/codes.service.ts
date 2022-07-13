@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Code } from './code.entity';
-import { CreateCodeDto } from './create-code.dto';
+import { CreateCodeDto } from './dto/create-code.dto';
+import { UpdateCodeDto } from './dto/update-code.dto';
 
 @Injectable()
 export class CodesService {
@@ -31,5 +32,9 @@ export class CodesService {
 
   deleteCodeById(codeId: number) {
     this.codeRepository.delete(codeId);
+  }
+
+  async updateText(codeId: number, codeUpdate: UpdateCodeDto) {
+    await this.codeRepository.update(codeId, codeUpdate);
   }
 }

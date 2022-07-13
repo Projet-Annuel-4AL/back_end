@@ -3,14 +3,16 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
   Post,
   UseGuards,
+  Headers,
+  Patch,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
-import { CreatePostDto } from './create-post.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('api/posts')
 export class PostsController {
@@ -21,7 +23,6 @@ export class PostsController {
     return this.postsService.getAll();
   }
 
-  @HttpCode(200)
   @Get('/:postId')
   getPostById(@Param('postId') postId) {
     return this.postsService.findByPostId(postId);
@@ -29,8 +30,18 @@ export class PostsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  createPost(@Body() createPost: CreatePostDto) {
+  createPost(@Headers() header, @Body() createPost: CreatePostDto) {
+    console.log(header);
     return this.postsService.createPost(createPost);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':postId')
+  async updatePost(
+    @Param('postId') postId: number,
+    @Body() postUpdate: UpdatePostDto,
+  ) {
+    return this.postsService.updatePost(postId, postUpdate);
   }
 
   @Get('/id/:userId')

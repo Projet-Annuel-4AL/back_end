@@ -1,38 +1,26 @@
 import {
-  Controller,
-  Request,
-  Get,
-  Post,
-  UseGuards,
   Body,
+  Controller,
+  Get,
   Param,
+  Patch,
+  SerializeOptions,
+  UseGuards,
 } from '@nestjs/common';
-import { LocalAuthGuard } from './auth/local-auth-guard';
-import { AuthService } from './auth/auth.service';
 import { UsersService } from './users/users.service';
-import { CreateUserDto } from './users/create-user.dto';
+import { JwtAuthGuard } from './auth/jwt-auth-guard';
+import { UpdateUserDto } from './users/dto/update-user.dto';
 
 @Controller('api/')
+// @SerializeOptions({
+//   strategy: 'excludeAll',
+//})
 export class AppController {
-  constructor(
-    private usersService: UsersService,
-    private authService: AuthService,
-  ) {}
-
-  @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
-  login(@Request() req) {
-    return this.authService.login(req.user);
-  }
+  constructor(private usersService: UsersService) {}
 
   @Get('users')
   findAllUser() {
     return this.usersService.getAll();
-  }
-
-  @Post('users')
-  createUser(@Body() createUser: CreateUserDto) {
-    return this.usersService.createUser(createUser);
   }
 
   @Get('users/:mail')
@@ -43,5 +31,14 @@ export class AppController {
   @Get('users/id/:userId')
   async getUserById(@Param('userId') userId) {
     return this.usersService.findByUserId(userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':userId')
+  async updateUser(
+    @Param('userId') userId: number,
+    @Body() userUpdate: UpdateUserDto,
+  ) {
+    return this.usersService.updateUser(userId, userUpdate);
   }
 }
