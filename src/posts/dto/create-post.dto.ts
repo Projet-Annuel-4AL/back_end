@@ -1,9 +1,35 @@
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+
 export class CreatePostDto {
+  @IsString()
+  @IsNotEmpty()
   readonly title: string;
+
+  @IsString()
+  @IsNotEmpty()
   readonly createdDate: string;
-  readonly idVideo: number;
-  readonly idPicture: number;
-  readonly idCode: number;
-  readonly idText: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @IsOptional()
+  readonly idVideo?: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @IsOptional()
+  readonly idPicture?: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @IsOptional()
+  readonly idCode?: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @IsOptional()
+  readonly idText?: number;
+
+  @IsNumber()
+  @IsNotEmpty()
   readonly idUser: number;
 }
