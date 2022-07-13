@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RelationGroupPost } from './relation-group-post.entity';
-import { CreateRelationGroupPostDto } from './create-relation-group-post.dto';
+import { CreateRelationGroupPostDto } from './dto/create-relation-group-post.dto';
 
 @Injectable()
 export class RelationGroupPostService {

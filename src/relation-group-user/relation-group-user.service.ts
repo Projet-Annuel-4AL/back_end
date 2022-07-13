@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRelationGroupUserDto } from './create-relation-group-user.dto';
+import { CreateRelationGroupUserDto } from './dto/create-relation-group-user.dto';
 import { RelationGroupUser } from './relation-group-user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

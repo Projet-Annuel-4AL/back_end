@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Like } from './like.entity';
-import { CreateLikeDto } from './create-like.dto';
+import { CreateLikeDto } from './dto/create-like.dto';
 import { UsersService } from '../users/users.service';
 import { Post } from '../posts/post.entity';
 

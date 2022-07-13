@@ -8,7 +8,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { CreateLikeDto } from './create-like.dto';
+import { CreateLikeDto } from './dto/create-like.dto';
 import { LikesService } from './likes.service';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
 

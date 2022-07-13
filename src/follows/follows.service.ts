@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Follow } from './follow.entity';
-import { CreateFollowDto } from './create-follow.dto';
+import { CreateFollowDto } from './dto/create-follow.dto';
 
 @Injectable()
 export class FollowsService {
