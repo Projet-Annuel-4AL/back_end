@@ -1,10 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Like } from './like.entity';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UsersService } from '../users/users.service';
 import { Post } from '../posts/post.entity';
+import { LikeNotFoundByIdException } from './exception/like-not-found-by-id-exception';
 
 @Injectable()
 export class LikesService {
@@ -15,14 +21,15 @@ export class LikesService {
   ) {}
 
   async createLike(likeCreate: CreateLikeDto) {
-    const posts: Post[] = await this.postRepository.find({
-      where: { id: likeCreate.idPost },
-    });
-    const like = this.likeRepository.create({
-      user: await this.usersService.findByUserId(likeCreate.idUser),
-      post: posts[0],
-    });
-    return this.likeRepository.save(like);
+    try {
+      const like = this.likeRepository.create({
+        user: await this.usersService.findByUserId(likeCreate.idUser),
+        post: await this.postRepository.findOne(likeCreate.idPost),
+      });
+      return this.likeRepository.save(like);
+    } catch (error) {
+      throw new BadRequestException(likeCreate, 'Follow creation error');
+    }
   }
 
   async getAll(): Promise<Like[]> {
@@ -30,10 +37,11 @@ export class LikesService {
   }
 
   async findByLikeId(likeId: number): Promise<Like> {
-    const likes = await this.likeRepository.find({
-      where: { id: likeId },
-    });
-    return likes[0];
+    const like = await this.likeRepository.findOne(likeId);
+    if (like) {
+      return like;
+    }
+    throw new LikeNotFoundByIdException(likeId);
   }
 
   async findByPostId(postId: number): Promise<Like[]> {
@@ -46,10 +54,13 @@ export class LikesService {
     idUser: number,
     idPost: number,
   ): Promise<Like> {
-    const likes = await this.likeRepository.find({
+    const like = await this.likeRepository.findOne({
       where: { idPost: idPost, idUser: idUser },
     });
-    return likes[0];
+    if (like) {
+      return like;
+    }
+    throw new LikeNotFoundByIdException(null);
   }
 
   async findByUserId(userId: number): Promise<Like[]> {
@@ -59,17 +70,24 @@ export class LikesService {
   }
 
   async deleteLikesById(id: number) {
-    return await this.likeRepository.delete(id);
+    const like = await this.likeRepository.delete(id);
+    if (like) {
+      return await this.likeRepository.delete(id);
+    }
+    throw new LikeNotFoundByIdException(id);
   }
 
   async deleteLikesByPostId(postId: number) {
     try {
       const likes: Like[] = await this.findByPostId(postId);
-      likes.map((like) => {
-        this.deleteLikesById(like.id);
+      likes.map(async (like) => {
+        await this.deleteLikesById(like.id);
       });
     } catch (error) {
-      console.log('likes delete error: ' + error);
+      throw new HttpException(
+        'Likes delete error: ' + error,
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 }
