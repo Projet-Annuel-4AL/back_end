@@ -1,14 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './post.entity';
 import { Repository } from 'typeorm';
-import { CreatePostDto } from './create-post.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 import { UsersService } from '../users/users.service';
 import { TextsService } from './post-body/texts/texts.service';
 import { CodesService } from './post-body/codes/codes.service';
 import { LikesService } from '../likes/likes.service';
 import { RemarksService } from '../remarks/remarks.service';
 import { PostNotFoundByIdException } from './exception/post-not-found-by-id-exception';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -75,5 +76,27 @@ export class PostsService {
     } catch (error) {
       console.log('likes delete error: ' + error);
     }
+  }
+
+  async updatePost(postId: number, postUpdate: UpdatePostDto) {
+    const post = await this.findByPostId(postId);
+    try {
+      if (postUpdate.text) {
+        await this.textsService.updateText(post.text.id, postUpdate.text);
+      } else if (postUpdate.code) {
+        await this.codesService.updateText(post.code.id, postUpdate.code);
+      }
+    } catch (error) {
+      throw new HttpException(
+        'Unable to change post content',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    await this.postRepository.update(postId, postUpdate.title);
+    const updatedPost = await this.findByPostId(postId);
+    if (updatedPost) {
+      return updatedPost;
+    }
+    throw new PostNotFoundByIdException(postId);
   }
 }

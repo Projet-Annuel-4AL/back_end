@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Picture } from './picture.entity';
-import { CreatePictureDto } from './create-picture.dto';
+import { CreatePictureDto } from './dto/create-picture.dto';
 
 @Injectable()
 export class PicturesService {

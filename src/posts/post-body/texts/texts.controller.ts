@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { CreateTextDto } from './create-text.dto';
+import { CreateTextDto } from './dto/create-text.dto';
 import { TextsService } from './texts.service';
 import { JwtAuthGuard } from '../../../auth/jwt-auth-guard';
 

@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserNotFoundByMailException } from './exception/user-not-found-by-mail-exception';
 import { UserNotFoundByIdException } from './exception/user-not-found-by-id-exception';
 import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -22,6 +23,15 @@ export class UsersService {
       idAddress: userCreate.idAddress,
     });
     return this.userRepository.save(user);
+  }
+
+  async updateUser(userId: number, userUpdate: UpdateUserDto) {
+    await this.userRepository.update(userId, userUpdate);
+    const updatedUser = await this.userRepository.findOne(userId);
+    if (updatedUser) {
+      return updatedUser;
+    }
+    throw new UserNotFoundByIdException(userId);
   }
 
   async setCurrentRefreshToken(refreshToken: string, userId: number) {

@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Text } from './text.entity';
-import { CreateTextDto } from './create-text.dto';
+import { CreateTextDto } from './dto/create-text.dto';
+import { UpdateTextDto } from './dto/update-text.dto';
 
 @Injectable()
 export class TextsService {
@@ -30,5 +31,9 @@ export class TextsService {
 
   deleteTextById(textId: number) {
     this.textRepository.delete(textId);
+  }
+
+  async updateText(textId: number, textUpdate: UpdateTextDto) {
+    await this.textRepository.update(textId, textUpdate);
   }
 }

@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGroupDto } from './create-group.dto';
+import { CreateGroupDto } from './dto/create-group.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Group } from './group.entity';
+import { UpdateGroupDto } from './dto/update-group.dto';
+import { GroupNotFoundByIdException } from './exception/group-not-found-by-id-exception';
+import { NotGroupOwnerException } from './exception/not-group-owner-exception';
 
 @Injectable()
 export class GroupsService {
@@ -24,11 +27,10 @@ export class GroupsService {
     return await this.groupRepository.find();
   }
 
-  async findByPostId(groupId: number): Promise<Group> {
-    const groups = await this.groupRepository.find({
+  async findByGroupId(groupId: number): Promise<Group> {
+    return await this.groupRepository.findOne({
       where: { id: groupId },
     });
-    return groups[0];
   }
 
   deleteGroupById(groupId: number) {
@@ -39,5 +41,22 @@ export class GroupsService {
     return this.groupRepository.find({
       where: { theme: theme },
     });
+  }
+
+  async updateGroup(
+    groupId: number,
+    userId: number,
+    groupUpdate: UpdateGroupDto,
+  ) {
+    const group: Group = await this.findByGroupId(groupId);
+    if (group.idGroupOwner != userId) {
+      throw new NotGroupOwnerException(groupId);
+    }
+    await this.groupRepository.update(groupId, groupUpdate);
+    const updatedGroup = await this.groupRepository.findOne(groupId);
+    if (updatedGroup) {
+      return updatedGroup;
+    }
+    throw new GroupNotFoundByIdException(groupId);
   }
 }

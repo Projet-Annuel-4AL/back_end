@@ -4,19 +4,19 @@ export class UpdateUserDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  readonly firstName: string;
+  readonly firstName?: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  readonly lastName: string;
+  readonly lastName?: string;
 
   @IsEmail()
   @IsNotEmpty()
   @IsOptional()
-  readonly mail: string;
+  readonly mail?: string;
 
   @IsString()
   @IsOptional()
-  readonly idAddress: string;
+  readonly idAddress?: string;
 }

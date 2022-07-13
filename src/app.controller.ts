@@ -1,5 +1,15 @@
-import { Controller, Get, Param, SerializeOptions } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  SerializeOptions,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users/users.service';
+import { JwtAuthGuard } from './auth/jwt-auth-guard';
+import { UpdateUserDto } from './users/dto/update-user.dto';
 
 @Controller('api/')
 // @SerializeOptions({
@@ -21,5 +31,14 @@ export class AppController {
   @Get('users/id/:userId')
   async getUserById(@Param('userId') userId) {
     return this.usersService.findByUserId(userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':userId')
+  async updateUser(
+    @Param('userId') userId: number,
+    @Body() userUpdate: UpdateUserDto,
+  ) {
+    return this.usersService.updateUser(userId, userUpdate);
   }
 }
