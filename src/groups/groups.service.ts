@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -14,13 +14,17 @@ export class GroupsService {
   ) {}
 
   createGroup(createGroup: CreateGroupDto): Promise<Group> {
-    const group: Group = this.groupRepository.create({
-      name: createGroup.name,
-      theme: createGroup.theme,
-      description: createGroup.description,
-      idGroupOwner: createGroup.idGroupOwner,
-    });
-    return this.groupRepository.save(group);
+    try {
+      const group: Group = this.groupRepository.create({
+        name: createGroup.name,
+        theme: createGroup.theme,
+        description: createGroup.description,
+        idGroupOwner: createGroup.idGroupOwner,
+      });
+      return this.groupRepository.save(group);
+    } catch (error) {
+      throw new BadRequestException(createGroup, 'Group creation error');
+    }
   }
 
   async getAll(): Promise<Group[]> {
@@ -28,13 +32,19 @@ export class GroupsService {
   }
 
   async findByGroupId(groupId: number): Promise<Group> {
-    return await this.groupRepository.findOne({
-      where: { id: groupId },
-    });
+    const group: Group = await this.groupRepository.findOne(groupId);
+    if (group) {
+      return group;
+    }
+    throw new GroupNotFoundByIdException(groupId);
   }
 
-  deleteGroupById(groupId: number) {
-    this.groupRepository.delete(groupId);
+  async deleteGroupById(groupId: number) {
+    const group: Group = await this.findByGroupId(groupId);
+    if (group) {
+      this.groupRepository.delete(groupId);
+    }
+    throw new GroupNotFoundByIdException(groupId);
   }
 
   getGroupsByTheme(theme: string): Promise<Group[]> {
