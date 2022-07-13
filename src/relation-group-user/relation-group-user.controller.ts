@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { RelationGroupUserService } from './relation-group-user.service';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
-import { CreateRelationGroupUserDto } from './create-relation-group-user.dto';
+import { CreateRelationGroupUserDto } from './dto/create-relation-group-user.dto';
 
 @Controller('api/relation-group-user')
 export class RelationGroupUserController {

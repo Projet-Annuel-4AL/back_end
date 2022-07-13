@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRelationGroupUserDto } from './create-relation-group-user.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { CreateRelationGroupUserDto } from './dto/create-relation-group-user.dto';
 import { RelationGroupUser } from './relation-group-user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { RelationGroupPostNotFoundByIdException } from '../relation-group-post/exception/relation-group-post-not-found-by-id-exception';
 
 @Injectable()
 export class RelationGroupUserService {
@@ -14,11 +15,15 @@ export class RelationGroupUserService {
   createRelation(
     createRelation: CreateRelationGroupUserDto,
   ): Promise<RelationGroupUser> {
-    const relation = this.relationGroupUserRepository.create({
-      idUser: createRelation.idUser,
-      idGroup: createRelation.idGroup,
-    });
-    return this.relationGroupUserRepository.save(relation);
+    try {
+      const relation = this.relationGroupUserRepository.create({
+        idUser: createRelation.idUser,
+        idGroup: createRelation.idGroup,
+      });
+      return this.relationGroupUserRepository.save(relation);
+    } catch (error) {
+      throw new BadRequestException(createRelation, 'Follow creation error');
+    }
   }
 
   getAll(): Promise<RelationGroupUser[]> {
@@ -26,10 +31,11 @@ export class RelationGroupUserService {
   }
 
   async getRelationById(relationId: number): Promise<RelationGroupUser> {
-    const relations = await this.relationGroupUserRepository.find({
-      where: { id: relationId },
-    });
-    return relations[0];
+    const relation = await this.relationGroupUserRepository.findOne(relationId);
+    if (relation) {
+      return relation;
+    }
+    throw new RelationGroupPostNotFoundByIdException(relationId);
   }
 
   async getRelationsByGroupId(groupId: number): Promise<RelationGroupUser[]> {
@@ -46,7 +52,11 @@ export class RelationGroupUserService {
     });
   }
 
-  deleteRelationById(relationId: number) {
-    this.relationGroupUserRepository.delete(relationId);
+  async deleteRelationById(relationId: number) {
+    const relation = await this.relationGroupUserRepository.delete(relationId);
+    if (relation) {
+      return await this.relationGroupUserRepository.delete(relationId);
+    }
+    throw new RelationGroupPostNotFoundByIdException(relationId);
   }
 }

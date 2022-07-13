@@ -7,7 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { CreateRemarkDto } from './create-remark.dto';
+import { CreateRemarkDto } from './dto/create-remark.dto';
 import { RemarksService } from './remarks.service';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
 

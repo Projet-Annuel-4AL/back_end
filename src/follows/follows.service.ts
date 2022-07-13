@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Follow } from './follow.entity';
-import { CreateFollowDto } from './create-follow.dto';
+import { CreateFollowDto } from './dto/create-follow.dto';
+import { FollowNotFoundByIdException } from './exception/follow-not-found-by-id-exception';
 
 @Injectable()
 export class FollowsService {
@@ -12,11 +13,15 @@ export class FollowsService {
   ) {}
 
   async createFollow(followCreate: CreateFollowDto) {
-    const follow = this.followsRepository.create({
-      idUserFollowed: followCreate.idUserFollowed,
-      idUserFollowing: followCreate.idUserFollowing,
-    });
-    return this.followsRepository.save(follow);
+    try {
+      const follow = this.followsRepository.create({
+        idUserFollowed: followCreate.idUserFollowed,
+        idUserFollowing: followCreate.idUserFollowing,
+      });
+      return this.followsRepository.save(follow);
+    } catch (error) {
+      throw new BadRequestException(followCreate, 'Follow creation error');
+    }
   }
 
   async getAll(): Promise<Follow[]> {
@@ -26,11 +31,14 @@ export class FollowsService {
   }
 
   async findByFollowId(followId: number): Promise<Follow> {
-    const follows = await this.followsRepository.find({
+    const follow = await this.followsRepository.findOne({
       where: { id: followId },
       relations: ['followedUser', 'followingUser'],
     });
-    return follows[0];
+    if (follow) {
+      return follow;
+    }
+    throw new FollowNotFoundByIdException(followId);
   }
 
   async findFollowByIdUserFollowingdAndIdUserFollower(
@@ -61,8 +69,12 @@ export class FollowsService {
     });
   }
 
-  async deleteFollowById(id: number) {
-    return await this.followsRepository.delete(id);
+  async deleteFollowById(followId: number) {
+    const follow: Follow = await this.findByFollowId(followId);
+    if (follow) {
+      return await this.followsRepository.delete(followId);
+    }
+    throw new FollowNotFoundByIdException(followId);
   }
 
   async findFollowsByUserId(userId: number) {

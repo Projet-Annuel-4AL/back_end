@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { FollowsService } from './follows.service';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
-import { CreateFollowDto } from './create-follow.dto';
+import { CreateFollowDto } from './dto/create-follow.dto';
 
 @Controller('api/follows')
 export class FollowsController {
