@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
+import * as Buffer from 'buffer';
 
 export class CreatePictureDto {
   @IsString()
   @IsNotEmpty()
-  readonly type: string;
+  dataBuffer: Buffer;
 
-  @IsString()
   @IsNotEmpty()
-  readonly url: string;
+  readonly fileName: string;
 }

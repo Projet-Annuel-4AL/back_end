@@ -6,12 +6,14 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
+import RequestWithUser from '../auth/request-whit-user.interface';
 
 @Controller('api/groups')
 export class GroupsController {
@@ -24,13 +26,17 @@ export class GroupsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':groupId/owner/:userId')
+  @Patch(':groupId')
   async updateGroup(
     @Param('groupId') groupId: number,
-    @Param('userId') userId: number,
+    @Req() request: RequestWithUser,
     @Body() groupUpdate: UpdateGroupDto,
   ) {
-    return this.groupsService.updateGroup(groupId, userId, groupUpdate);
+    return this.groupsService.updateGroup(
+      groupId,
+      request.user.id,
+      groupUpdate,
+    );
   }
 
   @Get()
