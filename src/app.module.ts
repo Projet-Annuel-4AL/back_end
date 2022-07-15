@@ -15,8 +15,6 @@ import { FollowsModule } from './follows/follows.module';
 import { GroupsModule } from './groups/groups.module';
 import { RelationGroupUserModule } from './relation-group-user/relation-group-user.module';
 import { RelationGroupPostModule } from './relation-group-post/relation-group-post.module';
-import { ConfigModule } from '@nestjs/config';
-import * as Joi from '@hapi/joi';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionsLoggerFilter } from './exception/exceptions-logger-filter';
 
@@ -33,16 +31,6 @@ config();
       database: process.env.DB_DATABASE,
       entities: ['dist/**/**.entity{.ts,.js}'],
       synchronize: false,
-    }),
-    ConfigModule.forRoot({
-      validationSchema: Joi.object({
-        //...
-        ACCESS_TOKEN_SECRET: Joi.string().required(),
-        ACCESS_TOKEN_EXPIRATION: Joi.string().required(),
-        REFRESH_TOKEN_SECRET: Joi.string().required(),
-        REFRESH_TOKEN_EXPIRATION: Joi.string().required(),
-        NESTJS_PORT: Joi.string().required(),
-      }),
     }),
     AuthModule,
     UsersModule,
