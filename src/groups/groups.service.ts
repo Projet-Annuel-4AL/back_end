@@ -42,7 +42,7 @@ export class GroupsService {
   async deleteGroupById(groupId: number) {
     const group: Group = await this.findByGroupId(groupId);
     if (group) {
-      await this.groupRepository.delete(groupId);
+      return await this.groupRepository.delete(groupId);
     }
     throw new GroupNotFoundByIdException(groupId);
   }

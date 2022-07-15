@@ -19,11 +19,15 @@ export class RelationGroupPost {
   @Column({ name: 'id_group' })
   idGroup: number;
 
-  @ManyToOne(() => Post, (post) => post.relationGroupPosts)
+  @ManyToOne(() => Post, (post) => post.relationGroupPosts, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_post' })
   post: Post;
 
-  @ManyToOne(() => Group, (group) => group.relationGroupPosts)
+  @ManyToOne(() => Group, (group) => group.relationGroupPosts, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_group' })
   group: Group;
 }

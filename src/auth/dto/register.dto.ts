@@ -17,9 +17,6 @@ export class RegisterDto {
   @IsNotEmpty()
   @MinLength(8)
   readonly password: string;
-
-  @IsString()
-  readonly idAddress: string;
 }
 
 export default RegisterDto;

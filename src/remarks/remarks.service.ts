@@ -24,6 +24,7 @@ export class RemarksService {
     try {
       const remark: Remark = this.remarkRepository.create({
         post: await this.postRepository.findOne(remarkCreate.idPost),
+        idPost: remarkCreate.idPost,
         idParentRemark: remarkCreate.idParentRemark,
         content: remarkCreate.content,
         user: await this.usersService.findByUserId(remarkCreate.idUser),

@@ -15,8 +15,4 @@ export class UpdateUserDto {
   @IsNotEmpty()
   @IsOptional()
   readonly mail?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly idAddress?: string;
 }

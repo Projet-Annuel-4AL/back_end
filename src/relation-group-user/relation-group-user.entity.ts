@@ -19,11 +19,15 @@ export class RelationGroupUser {
   @Column({ name: 'id_group' })
   idGroup: number;
 
-  @ManyToOne(() => User, (user) => user.relationGroupUsers)
+  @ManyToOne(() => User, (user) => user.relationGroupUsers, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_user' })
   user: User;
 
-  @ManyToOne(() => Group, (group) => group.relationGroupUsers)
+  @ManyToOne(() => Group, (group) => group.relationGroupUsers, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_group' })
   group: Group;
 }

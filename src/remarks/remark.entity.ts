@@ -13,10 +13,6 @@ export class Remark {
   @PrimaryGeneratedColumn({ name: 'id_remark' })
   id: number;
 
-  @ManyToOne(() => Post, (post) => post.remarks)
-  @JoinColumn({ name: 'id_post' })
-  post: Post;
-
   @Column({ name: 'id_parent_remark' })
   idParentRemark: number;
 
@@ -29,7 +25,15 @@ export class Remark {
   @Column({ name: 'id_post' })
   idPost: number;
 
-  @ManyToOne(() => User, (user) => user.remarks)
+  @ManyToOne(() => Post, (post) => post.remarks, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'id_post' })
+  post: Post;
+
+  @ManyToOne(() => User, (user) => user.remarks, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'id_user' })
   user: User;
 }

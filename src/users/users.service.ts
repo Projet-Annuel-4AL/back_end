@@ -20,14 +20,15 @@ export class UsersService {
       lastName: userCreate.lastName,
       mail: userCreate.mail,
       password: userCreate.password,
-      idAddress: userCreate.idAddress,
     });
     return this.userRepository.save(user);
   }
 
   async updateUser(userId: number, userUpdate: UpdateUserDto) {
     await this.userRepository.update(userId, userUpdate);
-    const updatedUser = await this.userRepository.findOne(userId);
+    const updatedUser = await this.userRepository.findOne({
+      where: { id: userId },
+    });
     if (updatedUser) {
       return updatedUser;
     }
