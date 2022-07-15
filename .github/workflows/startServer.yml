@@ -9,8 +9,6 @@ on:
 jobs:
   startServer:
     runs-on: ubuntu-latest
-    environment:
-      name: production
 
     steps:
     - name: start server nest
