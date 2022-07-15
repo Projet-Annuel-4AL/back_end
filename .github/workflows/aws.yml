@@ -25,4 +25,3 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         source: ./
         target: ${{ secrets.DIR_TARGET }}
-

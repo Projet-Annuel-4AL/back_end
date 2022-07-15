@@ -1,0 +1,26 @@
+name: Start Server
+
+on:
+  workflow_run:
+    workflows: [aws]
+    types:
+      - completed
+    branches:
+      - master
+
+jobs:
+  startServer:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+
+    steps:
+    - name: start server nest
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_DNS }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: npm install | npm start
