@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
         run: >
-          if lsof -Pi :3000 -sTCP:LISTEN 
+          if lsof -Pi :3000
           then 
             echo "running" 
           else 
