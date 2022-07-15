@@ -2,7 +2,7 @@ name: Start Server
 
 on:
   workflow_run:
-    workflows: [deploy]
+    workflows: [Deploy back-end aplication on EC2]
     types:
       - completed
     branches:
