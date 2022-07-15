@@ -5,12 +5,9 @@ on:
     workflows: [Deploy back-end aplication on EC2]
     types:
       - completed
-    branches:
-      - master
 
 jobs:
   startServer:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: production
