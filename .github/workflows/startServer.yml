@@ -24,5 +24,5 @@ jobs:
           if lsof -Pi :3000 -sTCP:LISTEN -t >/dev/null ; then 
             echo "running" 
           else 
-              echo "not running"
+              npm install | npm start
           fi
