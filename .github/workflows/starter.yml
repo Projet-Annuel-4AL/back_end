@@ -36,15 +36,15 @@ jobs:
           NESTJS_PORT: ${{ secrets.ENV_NESTJS_PORT }}
       run: |
         touch .env
-        echo DB_HOST= "$DB_HOST" >> .env
-        echo DB_PORT= "$DB_PORT" >> .env
-        echo DB_USER= "$DB_USER" >> .env
-        echo DB_PASSWORD= "$DB_PASSWORD" >> .env
-        echo DB_DATABASE= "$DB_DATABASE" >> .env
-        echo ACCESS_TOKEN_SECRET= "$ACCESS_TOKEN_SECRET" >> .env
-        echo ACCESS_TOKEN_EXPIRATION= "$ACCESS_TOKEN_EXPIRATION" >> .env
-        echo REFRESH_TOKEN_SECRET= "$REFRESH_TOKEN_SECRET" >> .env
+        echo DB_HOST= ${{ secrets.ENV_DB_HOST }} >> .env
+        echo DB_PORT= ${{ secrets.ENV_DB_PORT }} >> .env
+        echo DB_USER= ${{ secrets.ENV_DB_USER }} >> .env
+        echo DB_PASSWORD= ${{ secrets.ENV_DB_PASSWORD }} >> .env
+        echo DB_DATABASE= ${{ secrets.ENV_DB_DATABASE }} >> .env
+        echo ACCESS_TOKEN_SECRET= ${{ secrets.ENV_ACCESS_TOKEN_SECRET }} >> .env
+        echo ACCESS_TOKEN_EXPIRATION= ${{ secrets.ENV_ACCESS_TOKEN_EXPIRATION }} >> .env
+        echo REFRESH_TOKEN_SECRET= ${{ secrets.ENV_REFRESH_TOKEN_SECRET }} >> .env
         echo REFRESH_TOKEN_EXPIRATION= "$REFRESH_TOKEN_EXPIRATION" >> .env
-        echo NESTJS_PORT= "$NESTJS_PORT" >> .env
+        echo NESTJS_PORT= ${{ secrets.ENV_NESTJS_PORT }} >> .env
 
       shell: bash
