@@ -41,6 +41,7 @@ config();
         ACCESS_TOKEN_EXPIRATION: Joi.string().required(),
         REFRESH_TOKEN_SECRET: Joi.string().required(),
         REFRESH_TOKEN_EXPIRATION: Joi.string().required(),
+        NESTJS_PORT: Joi.string().required(),
       }),
     }),
     AuthModule,
