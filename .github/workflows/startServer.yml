@@ -20,9 +20,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
-        script: >
-          if lsof -Pi :3000 -sTCP:LISTEN -t >/dev/null ; then 
-            echo "running" 
-          else 
-              npm install | npm start
-          fi
+        script: ./.github/scripts/checkPort.sh
