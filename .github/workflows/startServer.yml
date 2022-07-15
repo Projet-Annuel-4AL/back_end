@@ -20,5 +20,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
-        script: npm install | npm start
-        command_timeout: "50s"
+        script: ./${{ secrets.USERNAME }}/restart.sh &
