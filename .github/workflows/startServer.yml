@@ -21,4 +21,4 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: npm install | npm start
-        timeout-minutes: 1
+        command_timeout: "50s"
