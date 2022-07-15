@@ -32,7 +32,9 @@ export class GroupsService {
   }
 
   async findByGroupId(groupId: number): Promise<Group> {
-    const group: Group = await this.groupRepository.findOne(groupId);
+    const group: Group = await this.groupRepository.findOne({
+      where: { id: groupId },
+    });
     if (group) {
       return group;
     }
@@ -63,7 +65,9 @@ export class GroupsService {
       throw new NotGroupOwnerException(groupId);
     }
     await this.groupRepository.update(groupId, groupUpdate);
-    const updatedGroup = await this.groupRepository.findOne(groupId);
+    const updatedGroup = await this.groupRepository.findOne({
+      where: { id: groupId },
+    });
     if (updatedGroup) {
       return updatedGroup;
     }

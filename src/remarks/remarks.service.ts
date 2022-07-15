@@ -23,7 +23,9 @@ export class RemarksService {
   async createRemark(remarkCreate: CreateRemarkDto): Promise<Remark> {
     try {
       const remark: Remark = this.remarkRepository.create({
-        post: await this.postRepository.findOne(remarkCreate.idPost),
+        post: await this.postRepository.findOne({
+          where: { id: remarkCreate.idPost },
+        }),
         idPost: remarkCreate.idPost,
         idParentRemark: remarkCreate.idParentRemark,
         content: remarkCreate.content,
@@ -40,7 +42,9 @@ export class RemarksService {
   }
 
   async findByRemarkId(remarkId: number): Promise<Remark> {
-    const remark = await this.remarkRepository.findOne(remarkId);
+    const remark = await this.remarkRepository.findOne({
+      where: { id: remarkId },
+    });
     if (remark) {
       return remark;
     }

@@ -31,7 +31,9 @@ export class RelationGroupUserService {
   }
 
   async getRelationById(relationId: number): Promise<RelationGroupUser> {
-    const relation = await this.relationGroupUserRepository.findOne(relationId);
+    const relation = await this.relationGroupUserRepository.findOne({
+      where: { id: relationId },
+    });
     if (relation) {
       return relation;
     }

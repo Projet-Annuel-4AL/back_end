@@ -24,7 +24,9 @@ export class LikesService {
     try {
       const like = this.likeRepository.create({
         user: await this.usersService.findByUserId(likeCreate.idUser),
-        post: await this.postRepository.findOne(likeCreate.idPost),
+        post: await this.postRepository.findOne({
+          where: { id: likeCreate.idPost },
+        }),
       });
       return this.likeRepository.save(like);
     } catch (error) {
@@ -37,7 +39,9 @@ export class LikesService {
   }
 
   async findByLikeId(likeId: number): Promise<Like> {
-    const like = await this.likeRepository.findOne(likeId);
+    const like = await this.likeRepository.findOne({
+      where: { id: likeId },
+    });
     if (like) {
       return like;
     }
