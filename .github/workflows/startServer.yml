@@ -20,4 +20,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
-        script: ./.github/scripts/checkPort.sh
+        script: chmod +x ./.github/scripts/checkPort.sh
