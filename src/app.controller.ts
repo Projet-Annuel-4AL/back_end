@@ -23,6 +23,11 @@ export class AppController {
     return this.usersService.getAll();
   }
 
+  @Get()
+  testingHome(): string {
+    return 'Api on the moon';
+  }
+
   @Get('users/:mail')
   async getUserByMail(@Param('mail') mail) {
     return this.usersService.findByMail(mail);
