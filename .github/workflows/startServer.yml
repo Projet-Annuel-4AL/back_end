@@ -18,4 +18,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
-        script: chmod 400 ./restart.sh &
+        script: ./restart.sh &
