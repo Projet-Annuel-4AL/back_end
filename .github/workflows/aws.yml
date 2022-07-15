@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
 
 jobs:
   build:
@@ -14,6 +11,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: production
 
     steps:
     - uses: actions/checkout@v1
@@ -26,3 +25,4 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         source: ./
         target: ${{ secrets.DIR_TARGET }}
+

@@ -1,27 +1,83 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '../users/user.entity';
+import { RegisterDto } from './dto/register.dto';
+import { compare, hash } from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
+import { TokenPayload } from './token-payload.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
-  async validateUser(username: string, pwd: string): Promise<any> {
-    const user = await this.userService.findOne(username);
-    if (user && user.password === pwd) {
-      const { password, ...result } = user; // retire le champs password de la réponse
-      return result;
+  async getAuthenticatedUser(mail: string, plainPassword: string) {
+    try {
+      const user = await this.userService.findByMail(mail);
+      await AuthService.verifyPassword(plainPassword, user.password);
+      user.password = undefined;
+      return user;
+    } catch (error) {
+      throw new HttpException(
+        'Wrong credentials provided',
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    return null;
   }
 
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
-    return {
-      access_token: this.jwtService.sign(payload),
+  private static async verifyPassword(
+    plainTextPassword: string,
+    hashedPassword: string,
+  ) {
+    const isPasswordMatching = await compare(plainTextPassword, hashedPassword);
+    if (!isPasswordMatching) {
+      throw new HttpException(
+        'Wrong credentials provided',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async getJwtAccessToken(user: User) {
+    const payload: TokenPayload = {
+      mail: user.mail,
+      sub: user.id,
+      username: user.firstName,
     };
+    return this.jwtService.sign(payload, {
+      secret: this.configService.get('ACCESS_TOKEN_SECRET'),
+      expiresIn: this.configService.get('ACCESS_TOKEN_EXPIRATION'),
+    });
+  }
+
+  async getJwtRefreshToken(user: User) {
+    const payload: TokenPayload = {
+      mail: user.mail,
+      sub: user.id,
+      username: user.firstName,
+    };
+    return this.jwtService.sign(payload, {
+      secret: this.configService.get('REFRESH_TOKEN_SECRET'),
+      expiresIn: this.configService.get('REFRESH_TOKEN_EXPIRATION'),
+    });
+  }
+
+  async register(registrationData: RegisterDto) {
+    const hashedPassword = await hash(registrationData.password, 5);
+    try {
+      return await this.userService.createUser({
+        ...registrationData,
+        password: hashedPassword,
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
