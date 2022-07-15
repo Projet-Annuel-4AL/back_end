@@ -20,8 +20,9 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
-        script: if lsof -Pi :3000 -sTCP:LISTEN -t >/dev/null ; then
-                echo "running"
-                else
-                echo "not running"
-                fi
+        run: >
+          if lsof -Pi :3000 -sTCP:LISTEN -t >/dev/null ; then 
+            echo "running" 
+          else 
+              echo "not running"
+          fi
