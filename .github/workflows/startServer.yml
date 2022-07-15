@@ -20,6 +20,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
-        run: | 
-          chmod +x ../scripts/checkPort.sh
-        shell: bash
+        script: if lsof -Pi :3000 -sTCP:LISTEN -t >/dev/null ; then
+                echo "running"
+                else
+                echo "not running"
+                fi
