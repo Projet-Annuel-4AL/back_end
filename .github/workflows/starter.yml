@@ -41,10 +41,10 @@ jobs:
         echo DB_USER= "$DB_USER" >> .env
         echo DB_PASSWORD= "$DB_PASSWORD" >> .env
         echo DB_DATABASE= "$DB_DATABASE" >> .env
-        ACCESS_TOKEN_SECRET= "$ACCESS_TOKEN_SECRET" >> .env
-        ACCESS_TOKEN_EXPIRATION= "$ACCESS_TOKEN_EXPIRATION" >> .env
-        REFRESH_TOKEN_SECRET= "$REFRESH_TOKEN_SECRET" >> .env
-        REFRESH_TOKEN_EXPIRATION= "$REFRESH_TOKEN_EXPIRATION" >> .env
-        NESTJS_PORT= "$NESTJS_PORT" >> .env
+        echo ACCESS_TOKEN_SECRET= "$ACCESS_TOKEN_SECRET" >> .env
+        echo ACCESS_TOKEN_EXPIRATION= "$ACCESS_TOKEN_EXPIRATION" >> .env
+        echo REFRESH_TOKEN_SECRET= "$REFRESH_TOKEN_SECRET" >> .env
+        echo REFRESH_TOKEN_EXPIRATION= "$REFRESH_TOKEN_EXPIRATION" >> .env
+        echo NESTJS_PORT= "$NESTJS_PORT" >> .env
 
       shell: bash
