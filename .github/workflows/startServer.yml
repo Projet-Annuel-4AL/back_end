@@ -2,7 +2,7 @@ name: Start Server
 
 on:
   workflow_run:
-    workflows: [aws]
+    workflows: [deploy]
     types:
       - completed
     branches:
