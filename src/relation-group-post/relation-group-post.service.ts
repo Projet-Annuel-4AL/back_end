@@ -54,4 +54,14 @@ export class RelationGroupPostService {
     }
     throw new RelationGroupPostNotFoundByIdException(relationId);
   }
+
+  async findRelationsByGroupIdAndPostId(idPost: number, idGroup: number) {
+    return await this.relationGroupPostRepository.find({
+      where: {
+        idPost: idPost,
+        idGroup: idGroup,
+      },
+      relations: ['post', 'group'],
+    });
+  }
 }

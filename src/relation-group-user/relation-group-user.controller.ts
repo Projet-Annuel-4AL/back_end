@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { RelationGroupUserService } from './relation-group-user.service';
@@ -22,8 +23,21 @@ export class RelationGroupUserController {
   }
 
   @Get()
-  findAllRelations() {
+  findAllRelations(
+    @Query('idGroup') idGroup?: number,
+    @Query('idUser') idUser?: number,
+  ) {
+    if (this.isNotEmptyParam(idUser) && this.isNotEmptyParam(idGroup)) {
+      return this.relationGroupUserService.findRelationsByGroupIdAndPostId(
+        idUser,
+        idGroup,
+      );
+    }
     return this.relationGroupUserService.getAll();
+  }
+
+  isNotEmptyParam(param: number): boolean {
+    return param != null;
   }
 
   @Get('/:relationId')

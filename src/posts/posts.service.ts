@@ -6,8 +6,6 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UsersService } from '../users/users.service';
 import { TextsService } from './post-body/texts/texts.service';
 import { CodesService } from './post-body/codes/codes.service';
-import { LikesService } from '../likes/likes.service';
-import { RemarksService } from '../remarks/remarks.service';
 import { PostNotFoundByIdException } from './exception/post-not-found-by-id-exception';
 import { UpdatePostDto } from './dto/update-post.dto';
 
@@ -18,8 +16,6 @@ export class PostsService {
     private usersService: UsersService,
     private textsService: TextsService,
     private codesService: CodesService,
-    private likesService: LikesService,
-    private remarksService: RemarksService,
   ) {}
 
   async createPost(postCreate: CreatePostDto) {
@@ -63,19 +59,11 @@ export class PostsService {
   }
 
   async deletePostById(postId: number) {
-    try {
-      const post: Post = await this.findByPostId(postId);
-      await this.remarksService.deleteRemarksByPostId(postId);
-      await this.likesService.deleteLikesByPostId(postId);
-      await this.postRepository.delete(postId);
-      if (post.code != null) {
-        this.codesService.deleteCodeById(post.code.id);
-      } else if (post.text != null) {
-        this.textsService.deleteTextById(post.text.id);
-      }
-    } catch (error) {
-      console.log('likes delete error: ' + error);
+    const post: Post = await this.findByPostId(postId);
+    if (post) {
+      return await this.postRepository.delete(postId);
     }
+    throw new PostNotFoundByIdException(postId);
   }
 
   async updatePost(postId: number, postUpdate: UpdatePostDto) {

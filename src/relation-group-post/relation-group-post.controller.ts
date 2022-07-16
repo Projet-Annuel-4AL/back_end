@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth-guard';
@@ -21,9 +22,23 @@ export class RelationGroupPostController {
     return this.relationGroupPostService.createRelation(createRelation);
   }
 
+  //TODO possiblement ca degage
   @Get()
-  findAllRelations() {
+  findAllRelations(
+    @Query('idGroup') idGroup?: number,
+    @Query('idPost') idPost?: number,
+  ) {
+    if (this.isNotEmptyParam(idPost) && this.isNotEmptyParam(idGroup)) {
+      return this.relationGroupPostService.findRelationsByGroupIdAndPostId(
+        idPost,
+        idGroup,
+      );
+    }
     return this.relationGroupPostService.getAll();
+  }
+
+  isNotEmptyParam(param: number): boolean {
+    return param != null;
   }
 
   @Get('/:relationId')
