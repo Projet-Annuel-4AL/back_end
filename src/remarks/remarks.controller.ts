@@ -26,12 +26,7 @@ export class RemarksController {
     return this.remarkService.getAll();
   }
 
-  @Get('/:remarkId')
-  async findByRemarkId(@Param('remarkId') remarkId) {
-    return this.remarkService.findByRemarkId(remarkId);
-  }
-
-  @Get('post/:postId')
+  @Get('posts/:postId')
   async getRemarksByPostId(@Param('postId') postId) {
     return this.remarkService.findByPostId(postId);
   }

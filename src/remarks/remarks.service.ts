@@ -41,20 +41,10 @@ export class RemarksService {
     return await this.remarkRepository.find();
   }
 
-  async findByRemarkId(remarkId: number): Promise<Remark> {
-    const remark = await this.remarkRepository.findOne({
-      where: { id: remarkId },
-      relations: ['user'],
-    });
-    if (remark) {
-      return remark;
-    }
-    throw new RemarkNotFoundByIdException(remarkId);
-  }
-
   async findByPostId(postId: number): Promise<Remark[]> {
     return await this.remarkRepository.find({
       where: { idPost: postId },
+      relations: ['user'],
     });
   }
 
