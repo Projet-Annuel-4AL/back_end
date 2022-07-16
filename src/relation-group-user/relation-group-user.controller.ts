@@ -28,7 +28,7 @@ export class RelationGroupUserController {
     @Query('idUser') idUser?: number,
   ) {
     if (this.isNotEmptyParam(idUser) && this.isNotEmptyParam(idGroup)) {
-      return this.relationGroupUserService.findRelationsByGroupIdAndPostId(
+      return this.relationGroupUserService.findRelationsByGroupIdAndUserId(
         idUser,
         idGroup,
       );

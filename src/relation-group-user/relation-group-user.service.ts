@@ -62,8 +62,8 @@ export class RelationGroupUserService {
     throw new RelationGroupPostNotFoundByIdException(relationId);
   }
 
-  async findRelationsByGroupIdAndPostId(idUser: number, idGroup: number) {
-    return await this.relationGroupUserRepository.find({
+  async findRelationsByGroupIdAndUserId(idUser: number, idGroup: number) {
+    return await this.relationGroupUserRepository.findOne({
       where: {
         idUser: idUser,
         idGroup: idGroup,
