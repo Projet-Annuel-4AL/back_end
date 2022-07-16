@@ -25,6 +25,9 @@ export class Remark {
   @Column({ name: 'id_post' })
   idPost: number;
 
+  @Column({ name: 'created_date' })
+  createdDate: string;
+
   @ManyToOne(() => Post, (post) => post.remarks, {
     onDelete: 'CASCADE',
   })

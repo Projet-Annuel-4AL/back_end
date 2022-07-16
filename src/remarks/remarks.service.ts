@@ -44,6 +44,7 @@ export class RemarksService {
   async findByRemarkId(remarkId: number): Promise<Remark> {
     const remark = await this.remarkRepository.findOne({
       where: { id: remarkId },
+      relations: ['user'],
     });
     if (remark) {
       return remark;
