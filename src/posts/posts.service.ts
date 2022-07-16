@@ -21,7 +21,6 @@ export class PostsService {
   async createPost(postCreate: CreatePostDto) {
     const post: Post = this.postRepository.create({
       title: postCreate.title,
-      createdDate: postCreate.createdDate,
       idVideo: postCreate.idVideo,
       idPicture: postCreate.idPicture,
       user: await this.usersService.findByUserId(postCreate.idUser),

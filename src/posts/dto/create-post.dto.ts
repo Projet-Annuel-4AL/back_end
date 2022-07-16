@@ -5,10 +5,6 @@ export class CreatePostDto {
   @IsNotEmpty()
   readonly title: string;
 
-  @IsString()
-  @IsNotEmpty()
-  readonly createdDate: string;
-
   @IsNumber()
   @IsNotEmpty()
   @IsOptional()
