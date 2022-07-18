@@ -24,10 +24,12 @@ export class CodesService {
   }
 
   async findByCodeId(codeId: number): Promise<Code> {
-    const codes = await this.codeRepository.find({
+    if (!codeId) {
+      return;
+    }
+    return await this.codeRepository.findOne({
       where: { id: codeId },
     });
-    return codes[0];
   }
 
   deleteCodeById(codeId: number) {

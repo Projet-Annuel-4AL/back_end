@@ -23,10 +23,12 @@ export class TextsService {
   }
 
   async findByTextId(textId: number): Promise<Text> {
-    const texts = await this.textRepository.find({
+    if (!textId) {
+      return;
+    }
+    return await this.textRepository.findOne({
       where: { id: textId },
     });
-    return texts[0];
   }
 
   deleteTextById(textId: number) {
