@@ -43,7 +43,13 @@ export class RelationGroupPostService {
   async getRelationsByGroupId(groupId: number): Promise<RelationGroupPost[]> {
     return await this.relationGroupPostRepository.find({
       where: { idGroup: groupId },
-      relations: ['post', 'post.text', 'post.code'],
+      relations: [
+        'post',
+        'post.text',
+        'post.code',
+        'post.likes',
+        'post.remarks',
+      ],
     });
   }
 
