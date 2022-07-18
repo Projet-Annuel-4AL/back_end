@@ -45,6 +45,7 @@ export class RelationGroupPostService {
       where: { idGroup: groupId },
       relations: [
         'post',
+        'post.user',
         'post.text',
         'post.code',
         'post.likes',
