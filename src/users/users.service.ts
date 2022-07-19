@@ -7,11 +7,14 @@ import { UserNotFoundByMailException } from './exception/user-not-found-by-mail-
 import { UserNotFoundByIdException } from './exception/user-not-found-by-id-exception';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { PicturesService } from '../posts/post-body/pictures/pictures.service';
+import { CreatePictureDto } from '../posts/post-body/pictures/dto/create-picture.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    private readonly picturesService: PicturesService,
   ) {}
 
   async createUser(userCreate: CreateUserDto) {
@@ -53,7 +56,7 @@ export class UsersService {
   async findByUserId(userId: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
-      relations: ['likes'],
+      relations: ['likes', 'avatar'],
     });
     if (user) return user;
     throw new UserNotFoundByIdException(userId);
@@ -78,5 +81,11 @@ export class UsersService {
     });
     if (user) return user;
     throw new UserNotFoundByMailException(userMail);
+  }
+
+  async addAvatar(userId: number, pictureCreate: CreatePictureDto) {
+    const avatar = await this.picturesService.createPicture(pictureCreate);
+    await this.userRepository.update(userId, { avatar: avatar });
+    return avatar;
   }
 }

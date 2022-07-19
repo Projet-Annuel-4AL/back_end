@@ -5,9 +5,9 @@ export class Picture {
   @PrimaryGeneratedColumn({ name: 'id_picture' })
   id: number;
 
-  @Column({ name: 'type' })
-  type: string;
-
   @Column({ name: 'url' })
   url: string;
+
+  @Column({ name: 'key' })
+  key: string;
 }

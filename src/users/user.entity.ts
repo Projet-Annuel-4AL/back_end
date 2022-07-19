@@ -1,10 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { Post } from '../posts/post.entity';
 import { Like } from '../likes/like.entity';
 import { Remark } from '../remarks/remark.entity';
 import { Follow } from '../follows/follow.entity';
 import { RelationGroupUser } from '../relation-group-user/relation-group-user.entity';
 import { Exclude, Expose } from 'class-transformer';
+import { Picture } from '../posts/post-body/pictures/picture.entity';
 
 @Entity('user')
 export class User {
@@ -29,6 +37,13 @@ export class User {
   @Column({ name: 'current_hashed_refresh_token', nullable: true })
   @Exclude()
   currentHashedRefreshToken?: string;
+
+  @JoinColumn({ name: 'id_avatar' })
+  @OneToOne(() => Picture, {
+    eager: true,
+    nullable: true,
+  })
+  public avatar?: Picture;
 
   @OneToMany(() => Post, (post) => post.user)
   @Expose()
