@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: start server nest
-      #uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST_DNS }}
         username: ${{ secrets.USERNAME }}
@@ -20,4 +20,3 @@ jobs:
         port: ${{ secrets.PORT }}
         script: ./restart.sh &
 
-    - run: npm run start:prod
