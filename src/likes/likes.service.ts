@@ -11,6 +11,7 @@ import { CreateLikeDto } from './dto/create-like.dto';
 import { UsersService } from '../users/users.service';
 import { Post } from '../posts/post.entity';
 import { LikeNotFoundByIdException } from './exception/like-not-found-by-id-exception';
+import { MercureService } from '../mercure/mercure.service';
 
 @Injectable()
 export class LikesService {
@@ -18,6 +19,7 @@ export class LikesService {
     @InjectRepository(Like) private likeRepository: Repository<Like>,
     private usersService: UsersService,
     @InjectRepository(Post) private postRepository: Repository<Post>,
+    private mercureService: MercureService,
   ) {}
 
   async createLike(likeCreate: CreateLikeDto) {
@@ -28,6 +30,11 @@ export class LikesService {
           where: { id: likeCreate.idPost },
         }),
       });
+      try {
+        await this.mercureService.sendPostsUpdate();
+      } catch (e) {
+        console.log(e);
+      }
       return this.likeRepository.save(like);
     } catch (error) {
       throw new BadRequestException(likeCreate, 'Follow creation error');
@@ -76,6 +83,11 @@ export class LikesService {
   async deleteLikesById(id: number) {
     const like = await this.likeRepository.delete(id);
     if (like) {
+      try {
+        await this.mercureService.sendPostsUpdate();
+      } catch (e) {
+        console.log(e);
+      }
       return await this.likeRepository.delete(id);
     }
     throw new LikeNotFoundByIdException(id);

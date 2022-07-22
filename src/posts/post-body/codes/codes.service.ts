@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Code } from './code.entity';
 import { CreateCodeDto } from './dto/create-code.dto';
 import { UpdateCodeDto } from './dto/update-code.dto';
+import { LikeNotFoundByIdException } from '../../../likes/exception/like-not-found-by-id-exception';
 
 @Injectable()
 export class CodesService {
@@ -36,7 +37,14 @@ export class CodesService {
     this.codeRepository.delete(codeId);
   }
 
-  async updateText(codeId: number, codeUpdate: UpdateCodeDto) {
+  async updateCode(codeId: number, codeUpdate: UpdateCodeDto) {
     await this.codeRepository.update(codeId, codeUpdate);
+    const updatedCode = await this.codeRepository.findOne({
+      where: { id: codeId },
+    });
+    if (updatedCode) {
+      return updatedCode;
+    }
+    throw new LikeNotFoundByIdException(codeId);
   }
 }

@@ -1,6 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { RelationGroupUser } from '../relation-group-user/relation-group-user.entity';
 import { RelationGroupPost } from '../relation-group-post/relation-group-post.entity';
+import { Collab } from '../collab/collab.entity';
 
 @Entity('group')
 export class Group {
@@ -24,4 +31,7 @@ export class Group {
 
   @OneToMany(() => RelationGroupPost, (relation) => relation.group)
   relationGroupPosts: RelationGroupPost[];
+
+  @OneToOne(() => Collab, (collab) => collab.group)
+  collab: Collab;
 }

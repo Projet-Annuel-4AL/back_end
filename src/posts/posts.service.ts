@@ -8,6 +8,7 @@ import { TextsService } from './post-body/texts/texts.service';
 import { CodesService } from './post-body/codes/codes.service';
 import { PostNotFoundByIdException } from './exception/post-not-found-by-id-exception';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { MercureService } from '../mercure/mercure.service';
 
 @Injectable()
 export class PostsService {
@@ -16,6 +17,7 @@ export class PostsService {
     private usersService: UsersService,
     private textsService: TextsService,
     private codesService: CodesService,
+    private mercureService: MercureService,
   ) {}
 
   async createPost(postCreate: CreatePostDto) {
@@ -27,6 +29,11 @@ export class PostsService {
       code: await this.codesService.findByCodeId(postCreate.idCode),
       text: await this.textsService.findByTextId(postCreate.idText),
     });
+    try {
+      await this.mercureService.sendPostsUpdate();
+    } catch (e) {
+      console.log(e);
+    }
     return this.postRepository.save(post);
   }
 
@@ -60,6 +67,11 @@ export class PostsService {
   async deletePostById(postId: number) {
     const post: Post = await this.findByPostId(postId);
     if (post) {
+      try {
+        await this.mercureService.sendPostsUpdate();
+      } catch (e) {
+        console.log(e);
+      }
       return await this.postRepository.delete(postId);
     }
     throw new PostNotFoundByIdException(postId);
@@ -71,7 +83,7 @@ export class PostsService {
       if (postUpdate.text) {
         await this.textsService.updateText(post.text.id, postUpdate.text);
       } else if (postUpdate.code) {
-        await this.codesService.updateText(post.code.id, postUpdate.code);
+        await this.codesService.updateCode(post.code.id, postUpdate.code);
       }
     } catch (error) {
       throw new HttpException(
@@ -82,6 +94,11 @@ export class PostsService {
     await this.postRepository.update(postId, postUpdate.title);
     const updatedPost = await this.findByPostId(postId);
     if (updatedPost) {
+      try {
+        await this.mercureService.sendPostsUpdate();
+      } catch (e) {
+        console.log(e);
+      }
       return updatedPost;
     }
     throw new PostNotFoundByIdException(postId);

@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 import { Post } from '../../post.entity';
+import { Collab } from '../../../collab/collab.entity';
 
 @Entity('code')
 export class Code {
@@ -14,4 +15,7 @@ export class Code {
 
   @OneToOne(() => Post, (post) => post.code)
   post: Post;
+
+  @OneToOne(() => Collab, (collab) => collab.code)
+  collab: Collab;
 }

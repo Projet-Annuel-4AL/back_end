@@ -8,6 +8,7 @@ import { CodesModule } from './post-body/codes/codes.module';
 import { UsersModule } from '../users/users.module';
 import { LikesModule } from '../likes/likes.module';
 import { RemarksModule } from '../remarks/remarks.module';
+import { MercureModule } from '../mercure/mercure.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RemarksModule } from '../remarks/remarks.module';
     UsersModule,
     LikesModule,
     RemarksModule,
+    MercureModule,
   ],
   providers: [PostsService],
   exports: [PostsService],

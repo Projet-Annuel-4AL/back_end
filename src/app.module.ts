@@ -18,6 +18,8 @@ import { RelationGroupPostModule } from './relation-group-post/relation-group-po
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionsLoggerFilter } from './exception/exceptions-logger-filter';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MercureModule } from './mercure/mercure.module';
+import { CollabModule } from './collab/collab.module';
 
 config();
 
@@ -50,6 +52,8 @@ config();
     GroupsModule,
     RelationGroupUserModule,
     RelationGroupPostModule,
+    MercureModule,
+    CollabModule,
   ],
   controllers: [AppController],
   providers: [
