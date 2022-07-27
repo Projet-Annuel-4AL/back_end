@@ -35,7 +35,7 @@ export class User {
   @Column({ name: 'current_hashed_refresh_token', nullable: true })
   currentHashedRefreshToken?: string;
 
-  @Column({ name: 'current_hashed_refresh_token' })
+  @Column({ name: 'admin' })
   admin: boolean;
 
   @JoinColumn({ name: 'id_avatar' })
