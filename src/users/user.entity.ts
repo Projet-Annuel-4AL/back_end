@@ -20,23 +20,23 @@ export class User {
   id: number;
 
   @Column({ name: 'first_name' })
-  @Expose()
   firstName: string;
 
   @Column({ name: 'last_name' })
-  @Expose()
   lastName: string;
 
   @Column({ name: 'mail', unique: true })
-  @Expose()
   mail: string;
 
   @Column({ name: 'password' })
+  @Exclude()
   password: string;
 
   @Column({ name: 'current_hashed_refresh_token', nullable: true })
-  @Exclude()
   currentHashedRefreshToken?: string;
+
+  @Column({ name: 'current_hashed_refresh_token' })
+  admin: boolean;
 
   @JoinColumn({ name: 'id_avatar' })
   @OneToOne(() => Picture, {
