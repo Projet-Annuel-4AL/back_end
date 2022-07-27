@@ -41,7 +41,6 @@ export class User {
   @JoinColumn({ name: 'id_avatar' })
   @OneToOne(() => Picture, {
     eager: true,
-    nullable: true,
   })
   public avatar?: Picture;
 

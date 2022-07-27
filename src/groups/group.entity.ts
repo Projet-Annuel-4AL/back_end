@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -8,6 +9,7 @@ import {
 import { RelationGroupUser } from '../relation-group-user/relation-group-user.entity';
 import { RelationGroupPost } from '../relation-group-post/relation-group-post.entity';
 import { Collab } from '../collab/collab.entity';
+import { Picture } from '../posts/post-body/pictures/picture.entity';
 
 @Entity('group')
 export class Group {
@@ -25,6 +27,12 @@ export class Group {
 
   @Column({ name: 'id_group_owner' })
   idGroupOwner: number;
+
+  @JoinColumn({ name: 'id_picture' })
+  @OneToOne(() => Picture, {
+    eager: true,
+  })
+  public picture?: Picture;
 
   @OneToMany(() => RelationGroupUser, (relation) => relation.group)
   relationGroupUsers: RelationGroupUser[];
