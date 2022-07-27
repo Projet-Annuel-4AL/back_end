@@ -45,7 +45,7 @@ export class CollabService {
     if (collab) {
       return collab;
     }
-    throw new BadRequestException(Collab, 'Get collab error');
+    return null;
   }
 
   async deleteCollabByGroupId(groupId) {
