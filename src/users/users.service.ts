@@ -18,13 +18,11 @@ export class UsersService {
   ) {}
 
   async createUser(userCreate: CreateUserDto) {
-    console.log(userCreate.avatar_id);
     const user = this.userRepository.create({
       firstName: userCreate.firstName,
       lastName: userCreate.lastName,
       mail: userCreate.mail,
       password: userCreate.password,
-      avatar: await this.picturesService.findByPictureId(userCreate.avatar_id),
     });
     return this.userRepository.save(user);
   }

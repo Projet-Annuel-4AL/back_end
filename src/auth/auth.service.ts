@@ -72,7 +72,6 @@ export class AuthService {
       return await this.userService.createUser({
         ...registrationData,
         password: hashedPassword,
-        avatar_id: 14,
       });
     } catch (error) {
       throw new HttpException(
