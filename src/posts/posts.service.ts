@@ -30,7 +30,8 @@ export class PostsService {
       text: await this.textsService.findByTextId(postCreate.idText),
     });
     try {
-      await this.mercureService.sendPostsUpdate();
+      // TODO fix mercure
+      // this.mercureService.sendPostsUpdate();
     } catch (e) {
       console.log(e);
     }
@@ -68,9 +69,11 @@ export class PostsService {
     const post: Post = await this.findByPostId(postId);
     if (post) {
       try {
-        await this.mercureService.sendPostsUpdate();
+        // TODO fix mercure
+        // this.mercureService.sendPostsUpdate();
       } catch (e) {
         console.log(e);
+        return;
       }
       return await this.postRepository.delete(postId);
     }
@@ -95,7 +98,8 @@ export class PostsService {
     const updatedPost = await this.findByPostId(postId);
     if (updatedPost) {
       try {
-        await this.mercureService.sendPostsUpdate();
+        // TODO fix mercure
+        // this.mercureService.sendPostsUpdate();
       } catch (e) {
         console.log(e);
       }

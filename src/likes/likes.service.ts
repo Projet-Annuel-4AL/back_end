@@ -31,7 +31,8 @@ export class LikesService {
         }),
       });
       try {
-        await this.mercureService.sendPostsUpdate();
+        // TODO fix mercure
+        // this.mercureService.sendPostsUpdate();
       } catch (e) {
         console.log(e);
       }
@@ -84,7 +85,8 @@ export class LikesService {
     const like = await this.likeRepository.delete(id);
     if (like) {
       try {
-        await this.mercureService.sendPostsUpdate();
+        // TODO fix mercure
+        // this.mercureService.sendPostsUpdate();
       } catch (e) {
         console.log(e);
       }
